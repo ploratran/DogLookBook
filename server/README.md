@@ -1,7 +1,6 @@
 # Server Side:
-==============
 
-> Using Serverless Framework:
+> Using **Serverless Framework:**
 
 ### To use Serverless Framework, install: 
 ``` serverless create --template aws-nodejs-typescript --path server```
@@ -16,6 +15,7 @@
 ├── serverless.yml
 ├── tsconfig.json
 ├── webpack.config.js
+├── README.md
 ├── model-validator (JSON Schema)
     ├── create-post-request.json
     ├── update-post-request.json
