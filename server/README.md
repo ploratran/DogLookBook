@@ -1,4 +1,4 @@
-# Server Side:
+# Server Side
 
 > Using **Serverless Framework:**
 

@@ -1,4 +1,4 @@
-# Client Side:
+# Client Side
 
 > Using **React Framework:**
 
@@ -6,6 +6,7 @@
 ``` npx create-react-app cloud-developer-capstone ```
 
 ### Directory Layout: 
+``` 
 .
 ├── node_modules
 ├── .gitignore
@@ -32,3 +33,4 @@
     ├── routing.tsx
     ├── config.ts
     ├── react-app-env.d.ts
+``` 
