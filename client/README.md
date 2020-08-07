@@ -5,6 +5,11 @@
 ### Install React boilerplate with: 
 ``` npx create-react-app cloud-developer-capstone ```
 
+### Dependencies and Dev Dependencies: 
+``` npm install @types/node @types/react @types/react @types/react-dom @types/react-router-dom react-router-dom semantic-ui-css semantic-ui-react styled-components typescript -S ```
+
+``` npm install @types/styled-components auth0-js --save-dev```
+
 ### Directory Layout: 
 ``` 
 .
