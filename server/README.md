@@ -2,8 +2,13 @@
 
 > Using **Serverless Framework:**
 
-### To use Serverless Framework, install: 
+### To use Serverless with Nodejs, AWS and Typescript, install: 
 ``` serverless create --template aws-nodejs-typescript --path server```
+
+### Dependencies and Dev Denpendencies: 
+``` npm install aws-xray-sdk cors elasticsearch http-aws-es jsonwebtoken middy uuid -S```
+
+``` npm install @types/jsonwebtoken @types/elasticsearch aws-sdk serverless-aws-documentation serverless-dynamodb-local serverless-iam-roles-per-function serverless-reqvalidator-plugin --save-dev```
 
 ### Directory Layout: 
 ```
