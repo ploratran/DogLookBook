@@ -9,13 +9,13 @@ interface ImagesListProps {
 }; 
 
 // image list will be an array of images: 
-// interface ImagesListState {
-//     images: ImageModel[]; 
-// }
+interface ImagesListState {
+    images: ImageModel[]; 
+}
 
 const ImagesList = (props: ImagesListProps) => {
 
-    const [images, setImages] = React.useState<Array<ImageModel>>([]); 
+    const [images, setImages] = React.useState<ImagesListState["images"]>([]); 
 
     const handleCreateImage = () => {
         props.history.push(`/images/create`); 
