@@ -21,21 +21,21 @@
 ├── tsconfig.json
 ├── src
     ├── api
-        ├── posts-api.ts
+        ├── images-api.ts
     ├── auth
-        ├── Auth.jsx
+        ├── Auth.js
     ├── components
         ├── Callback.tsx
-        ├── Login.tsx
-        ├── NotFound.tsx
-        ├── Image.tsx
-        ├── ImageList.tsx
         ├── CreateImage.tsx
         ├── EditImage.tsx
+        ├── Image.tsx
+        ├── ImageList.tsx
+        ├── Login.tsx
+        ├── NotFound.tsx
     ├── type-interfaces
-        ├── CreateImageRequest.ts
+        ├── CreateImageRequest.ts 
         ├── ImageModel.ts
-        ├── UpdateImageRequest.ts
+        ├── UpdateImageRequest.ts 
     ├── App.tsx
     ├── index.tsx
     ├── routing.tsx

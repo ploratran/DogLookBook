@@ -31,7 +31,7 @@
     ├── businessLogic
         ├── postLogic.ts
     ├── dataLayer
-        ├── postLayer.ts
+        ├── accessLayer.ts
     ├── lambda
         ├── auth
             ├── authOAuthorizer.ts
@@ -40,11 +40,11 @@
             ├── getPost.ts
             ├── deletePost.ts
             ├── updatePost.ts
-            ├── generateUploadUrl.ts
+            ├── generateUpload.ts
     ├── model-interfaces
-        ├── PostItem.ts
-        ├── PostUpdateItem.ts
+        ├── ImageModel.ts
+        ├── UpdateItem.ts
     ├── request-interfaces
-        ├── CreatePostRequest.ts
-        ├── UpdatePostRequest.ts
+        ├── CreateImageRequest.ts
+        ├── UpdateImageRequest.ts
 ``` 
