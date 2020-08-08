@@ -3,10 +3,45 @@
 > Option 2:  A **Serverless** Application
 
 ## Table of Contents
-1. [Capstone Requirements](#capstone-requirements)
+1. [Description](#description)
 2. [Technologies](#technologies)
-3. [Demo](#demo)
+3. [Getting Started](#getting-started)
+4. [Endpoints](#endpoints)
+5. [Image Mode](#image-model)
+6. [Capstone Requirements](#capstone-requirements)
+7. [Demo](#demo)
 
+## Description:
+A capstone project called **Dogram** to graduate Udacity Cloud Developer Nanodegree. It is a simple Instagram-cloned app using Serverless with Auth0.js for authentication. 
+
+## Technologies: 
+- Serverless Framework
+- React.js
+- AWS DynamoDB, Cloudwatch, Lambda, API Gateway, Cloudformation, S3, X-Ray, SDK
+- Auth0 using RS256 Algorithm
+
+## Getting Started:
+### Backend
+### Frontend
+
+## Endpoints: 
+| **Method** | **endpoint** |
+| ---------- | |
+| **GET**    | |
+| **POST**   | |
+| **UPDATE** | |
+| **DELETE** | |
+| **POST**   | |
+
+## Image Model
+Each Image item has the following fields: 
+
+* `userId` (string) - unique ID of current user
+* `imageId` (string) - unique id for an image
+* `name` (string) - name of an Image item
+* `description` (string) - description of the image
+* `createdAt` (boolean) - date and time when an image was created
+* `imageUrl` (string) - a URL pointing to an image using S3
 
 ## Capstone Requirements
 1. **Functionalities:** 
@@ -34,11 +69,5 @@ KeySchema:
       KeyType: RANGE
 ```
 - Items are fetched using `.query()` instead of `.scan()` method. 
-
-## Technologies: 
-- Serverless Framework
-- React.js
-- AWS DynamoDB, Cloudwatch, Lambda, API Gateway, Cloudformation, S3, X-Ray, SDK
-- Auth0 using RS256 Algorithm
 
 ## Demo: 
