@@ -1,13 +1,10 @@
-import React from 'react';
 import ReactDOM from 'react-dom';
-import './index.css';
-import App from './App';
+import 'semantic-ui-css/semantic.min.css' // css bundled 
 import * as serviceWorker from './serviceWorker';
+import { makeAuthRouting } from './routing'; 
 
 ReactDOM.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
+  makeAuthRouting(),
   document.getElementById('root')
 );
 
