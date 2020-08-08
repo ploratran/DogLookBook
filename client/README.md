@@ -28,11 +28,14 @@
         ├── Callback.tsx
         ├── Login.tsx
         ├── NotFound.tsx
-        ├── Posts.tsx
+        ├── Image.tsx
+        ├── ImageList.tsx
+        ├── CreateImage.tsx
+        ├── EditImage.tsx
     ├── type-interfaces
-        ├── CreatePostRequest.ts
-        ├── Post.ts
-        ├── UpdatePostRequest.ts
+        ├── CreateImageRequest.ts
+        ├── ImageModel.ts
+        ├── UpdateImageRequest.ts
     ├── App.tsx
     ├── index.tsx
     ├── routing.tsx
