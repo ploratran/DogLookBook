@@ -1,12 +1,12 @@
 import React from 'react'; 
 import { Router, Route } from 'react-router-dom'; 
-import createHistory from 'history/createBrowserHistory';
+import { createBrowserHistory } from 'history';
 import App from './App'; 
 import Auth from './auth/Auth'; 
 import CallBack from './components/Callback'; 
 
 // instantiate history object: 
-const history = createHistory(); 
+const history = createBrowserHistory(); 
 
 // instantiate an auth object wit 'history' props: 
 // using 3rd party library outside of functional component: 
