@@ -26,8 +26,8 @@
     ├── update-post-request.json
 ├── src 
     ├── auth
-        ├── jwtInterface.js
-        ├── jwtPayloadInterface.ts
+        ├── Jwt.ts
+        ├── JwtPayload.ts
     ├── businessLogic
         ├── postLogic.ts
     ├── dataLayer
@@ -36,11 +36,14 @@
         ├── auth
             ├── authOAuthorizer.ts
         ├── http
-            ├── createPost.ts
-            ├── getPost.ts
-            ├── deletePost.ts
-            ├── updatePost.ts
+            ├── createImage.ts
+            ├── deleteImage.ts
             ├── generateUpload.ts
+            ├── getImage.ts
+            ├── updateImage.ts
+        ├── utils
+            ├── getUserId.ts
+            ├── parseUserId.ts
     ├── model-interfaces
         ├── ImageModel.ts
         ├── UpdateItem.ts
