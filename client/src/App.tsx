@@ -3,6 +3,8 @@ import { Router, Route, Switch, Link } from 'react-router-dom';
 import { Grid, Menu, Segment } from 'semantic-ui-react'; 
 import Auth from './auth/Auth'; 
 import NotFound from './components/NotFound'; 
+import CreateImage from './components/CreateImage'; 
+import ImagesList from './components/ImagesList';
 
 export interface AppProps {
   auth: Auth, 
@@ -23,22 +25,15 @@ const App = (props: AppProps) => {
     return (
       <Menu>
         <Menu.Item name='home'>
+          {/* define path to Homepage */}
           <Link to='/'>Home</Link>
         </Menu.Item>
 
-        <Menu.Menu position='right'>{logInLogOutButton}</Menu.Menu>
+        {/* define login/logout button */}
+        <Menu.Menu position='right'>{logInLogOutButton()}</Menu.Menu>
       </Menu>
     )
   }; 
-
-  // define route for each component: 
-  const generateCurrentPage = () => {
-    return (
-      <Switch>
-        <Route component={NotFound}/>
-      </Switch>
-    )
-  }
 
   const logInLogOutButton = () => {
     if (props.auth.isAuthenticated()) {
@@ -56,6 +51,32 @@ const App = (props: AppProps) => {
     }
   };
 
+  // define route for each component: 
+  const generateCurrentPage = () => {
+    return (
+      <Switch>
+        {/* Route to Create Image */}
+        <Route 
+          path="/images/create" 
+          exact
+          render={props => {
+            return <CreateImage {...props} />
+          }}
+        />
+
+        {/* Route to display images */}
+        <Route 
+          path="/images/:imageId"
+          exact
+          component={ImagesList}
+        />
+
+        {/* Route to display Not Found */}
+        <Route component={NotFound}/>
+      </Switch>
+    )
+  }
+
   return (
     <div>
       <Segment style={{padding: '8em 0em'}} vertical>
@@ -63,9 +84,9 @@ const App = (props: AppProps) => {
           <Grid.Row>
             <Grid.Column width={16}>
               <Router history={props.history}>
-                {generateMenu}
+                {generateMenu()}
 
-                {generateCurrentPage}
+                {generateCurrentPage()}
               </Router>
             </Grid.Column>
           </Grid.Row>
@@ -73,7 +94,6 @@ const App = (props: AppProps) => {
       </Segment>
     </div>
   );
-
 }
 
 export default App;

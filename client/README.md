@@ -10,6 +10,15 @@
 
 ``` npm install @types/styled-components auth0-js --save-dev```
 
+## Image Model
+Each Image item has the following fields: 
+
+* `imageId` (string) - unique id for an image
+* `name` (string) - name of an Image item
+* `description` (string) - description of the image
+* `createdAt` (boolean) - date and time when an image was created
+* `imageUrl` (string) - a URL pointing to an image using S3
+
 ### Directory Layout: 
 ``` 
 .
@@ -28,7 +37,7 @@
         ├── Callback.tsx
         ├── CreateImage.tsx
         ├── EditImage.tsx
-        ├── Image.tsx
+        ├── ImageItem.tsx
         ├── ImageList.tsx
         ├── Login.tsx
         ├── NotFound.tsx

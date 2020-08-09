@@ -9,7 +9,12 @@ enum UploadState {
 }
 
 interface CreateImageProps {
-    auth: Auth, 
+    // auth: Auth, 
+    match: {
+        params: {
+            imageId: string, 
+        }
+    }
 }
 
 interface CreateImageState {
