@@ -5,6 +5,7 @@ import Auth from './auth/Auth';
 import NotFound from './components/NotFound'; 
 import CreateImage from './components/CreateImage'; 
 import ImagesList from './components/ImagesList';
+import Login from './components/Login';
 
 export interface AppProps {
   auth: Auth, 
@@ -53,6 +54,10 @@ const App = (props: AppProps) => {
 
   // define route for each component: 
   const generateCurrentPage = () => {
+
+    if (!props.auth.isAuthenticated()) {
+      return <Login auth={props.auth}/>
+    }
     return (
       <Switch>
         {/* Route to Create Image */}
@@ -66,9 +71,11 @@ const App = (props: AppProps) => {
 
         {/* Route to display images */}
         <Route 
-          path="/images/:imageId"
+          path="/"
           exact
-          component={ImagesList}
+          render={props => {
+            return <ImagesList {...props} />
+          }}
         />
 
         {/* Route to display Not Found */}
