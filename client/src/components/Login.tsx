@@ -1,6 +1,6 @@
 import * as React from 'react'; 
 import Auth from '../auth/Auth'; 
-import { Button } from 'semantic-ui-react';
+import { Segment, Label, Button } from 'semantic-ui-react';
 
 interface LoginProps {
     auth: Auth, 
@@ -13,11 +13,19 @@ const Login = (props: LoginProps) => {
 
     return (
         <div>
-            <h1>Please Log In</h1>
+            <Segment>
+                <Label ribbon color="blue" size="large">Introduction</Label>
+                <Segment basic textAlign={"center"}>
+                    <h3 style={{textAlign:"center"}}>Welcome to Dogram,
+                        In order to use the app, please click the "Log In" button at the right-hand corner
+                    </h3>
+                    {/* <Button style={{textAlign: "center"}} onClick={() => onLogin} size='huge' center color='blue'>
+                        Log In
+                    </Button> */}
+                </Segment>
+            </Segment>
 
-            <Button onClick={() => onLogin} size='huge' color='blue'>
-                Log In
-            </Button>
+            
         </div>
     )
 }; 
