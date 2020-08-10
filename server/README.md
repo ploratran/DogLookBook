@@ -28,6 +28,19 @@ Each image item requires the following fields when updating:
 
 * `description` (string) - description of an image
 
+3. **Create Request Model:**
+
+Field(s) required when make a request to create a new image: 
+
+* `description` (string) - description of an image
+
+4. **Update Request Model:**
+
+Field(s) required when make a request to update an image: 
+
+* `description` (string) - description of an image
+
+
 ### Directory Layout: 
 ```
 .
