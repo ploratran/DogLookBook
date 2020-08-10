@@ -8,7 +8,25 @@
 ### Dependencies and Dev Denpendencies: 
 ``` npm install aws-xray-sdk cors elasticsearch http-aws-es jsonwebtoken middy uuid winston -S```
 
-``` npm install @types/jsonwebtoken @types/elasticsearch aws-sdk serverless-aws-documentation serverless-dynamodb-local serverless-iam-roles-per-function serverless-reqvalidator-plugin --save-dev```
+``` npm install @types/jsonwebtoken @types/elasticsearch aws-sdk serverless-aws-documentation serverless-dynamodb-local serverless-iam-roles-per-function serverless-reqvalidator-plugin serverless-plugin-tracing --save-dev```
+
+### Models: 
+
+1. **Image Item Model:**
+
+Each Image item has the following fields: 
+
+* `userId` (string) - unique id of an user
+* `imageId` (string) - unique id of an image
+* `description` (boolean) - description of an image
+* `createdAt` (string) - date and time when an image was created
+* `imageUrl` (boolean) - a URL pointing to an image using S3
+
+2. **Image Update Item Model:**
+
+Each image item requires the following fields when updating: 
+
+* `description` (string) - description of an image
 
 ### Directory Layout: 
 ```
@@ -41,13 +59,14 @@
             ├── generateUpload.ts
             ├── getImage.ts
             ├── updateImage.ts
-        ├── utils
-            ├── getUserId.ts
-            ├── parseUserId.ts
     ├── model-interfaces
         ├── ImageModel.ts
-        ├── UpdateItem.ts
+        ├── ImageUpdate.ts
     ├── request-interfaces
         ├── CreateImageRequest.ts
         ├── UpdateImageRequest.ts
+    ├── utils
+        ├── getUserId.ts
+        ├── parseUserId.ts
+        ├── logger.ts
 ``` 

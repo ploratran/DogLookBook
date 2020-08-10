@@ -1,0 +1,37 @@
+service: 
+    name: dogram
+
+plugins:
+    - serverless-webpack
+    - serverless-iam-roles-per-function # able to define iam role each function
+    - serverless-aws-documentation
+    - serverless-reqvalidator-plugin
+    - serverless-dynamodb-local # emulate DynamoDB locally 
+    - serverless-plugin-tracing
+
+provider: 
+    name: aws
+    runtime: nodejs12.x
+    $stage: ${opt: stage, 'dev'}
+    region: ${opt: region, 'us-east-2'}
+
+    tracing: 
+        lambda: true
+        apiGateway: true
+
+    environment: 
+        IMAGES_TABLE: Images-${self:provider.stage}
+        IMAGES_S3_BUCKET: ploratran-images-abc123-${self:provider.stage}
+        SIGNED_URL_EXPIRATION: 300
+
+custom: 
+    documentation: 
+        api: 
+            info: 
+                version: v1.0.0
+                title: Dogram API 
+                description: Udacity Serverless Capstone Project
+
+functions: 
+
+resources: 
