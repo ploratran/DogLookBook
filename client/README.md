@@ -14,7 +14,6 @@
 Each Image item has the following fields: 
 
 * `imageId` (string) - unique id for an image
-* `name` (string) - name of an Image item
 * `description` (string) - description of the image
 * `createdAt` (boolean) - date and time when an image was created
 * `imageUrl` (string) - a URL pointing to an image using S3
