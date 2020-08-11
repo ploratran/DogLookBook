@@ -7,7 +7,7 @@
 2. [Technologies](#technologies)
 3. [Getting Started](#getting-started)
 4. [Endpoints](#endpoints)
-5. [Image Mode](#image-model)
+5. [Image Model](#image-model)
 6. [Capstone Requirements](#capstone-requirements)
 7. [Demo](#demo)
 

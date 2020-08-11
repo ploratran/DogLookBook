@@ -102,10 +102,6 @@ resources:
                       AttributeType: S 
                     - AttributeName: createdAt
                       AttributeType: S
-                    - AttributeName: description
-                      AttributeType: S
-                    - AttributeName: imageUrl
-                      AttributeType: S
                 KeySchema: 
                     # 1:M (1 user => Many images)
                     - AttributeName: userId

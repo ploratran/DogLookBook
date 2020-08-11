@@ -12,13 +12,13 @@
 
 ### DynamoDB Table Schema: 
 
-| **PK**     | **SK**      |          **attributes**            |
+| **PK**     | **SK**      | **attributes** | | |
 | ---------- | ------------| ---------------------------------- |
 | **userId** | **imageId** | createdAt | imageUrl | description |
 
 #### **Global Index Table Schema:**
 
-| **PK**      | **SK**        |          **attributes**         |
+| **PK**      | **SK**        | **attributes** | | |
 | ----------  | ------------- | ------------------------------- |
 | **imageId** | **createdAt** | userId | imageUrl | description |
 
