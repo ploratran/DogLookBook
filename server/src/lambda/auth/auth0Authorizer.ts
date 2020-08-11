@@ -1,6 +1,6 @@
 // **** WORK WITH MANY USER ACCOUNTS **** //
 import { CustomAuthorizerEvent, CustomAuthorizerResult } from 'aws-lambda'; 
-import 'source-map-support/register'; 
+import 'source-map-support/register';
 import { verify, decode } from 'jsonwebtoken'; 
 import { createLogger } from '../../utils/logger';  // winston logger
 import axios from 'axios'; 

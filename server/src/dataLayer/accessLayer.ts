@@ -10,7 +10,7 @@ const logger = createLogger('Access Layer');
 
 export class AccessLayer {
     constructor (
-        private readonly docClient: DocumentClient = new XAWS.DynamoDB.DocumentClient(), 
+        private readonly docClient: DocumentClient = createDynamoDBClient(), 
         private readonly imagesTable = process.env.IMAGES_TABLE, 
         //  private readonly indexTable = process.env.IMAGE_INDEX, 
     ) {}
@@ -40,3 +40,16 @@ export class AccessLayer {
     
     // DELETE image item based on userId and imageId
 }
+
+const createDynamoDBClient = () => {
+    if (process.env.IS_OFFLINE) {
+        console.log(`Create local DynamoDB instance`); 
+        logger.info(`Create local DynamoDB instance`); 
+
+        return new XAWS.DynamoDB.DocumentClient({
+            region: 'localhost', 
+            endpoint: 'http://localhost:8000', 
+        });
+    }
+    return new XAWS.DynamoDB.DocumentClient(); 
+};

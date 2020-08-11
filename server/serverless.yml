@@ -26,6 +26,9 @@ provider:
       SIGNED_URL_EXPIRATION: 300
 
 custom: 
+  webpack: 
+    webpackConfig: ./webpack.config.js 
+    includeModules: true  
   documentation: 
     api: 
       info: 
@@ -45,29 +48,6 @@ functions:
   RS256Auth: 
     handler: src/lambda/auth/auth0Authorizer.handler
 
-  # GetImages:
-  #   handler: src/lambda/http/getImages.handler
-  #   iamRoleStatements:
-  #     - Effect: Allow # permission to Query table
-  #       Action:
-  #         - dynamodb:Query
-  #       # Query from Index Table for fast
-  #       Resource: arn:aws:dynamodb:${self:provider.region}:*:table/${self:provider.environment.IMAGES_TABLE}/index/${self:provider.environment.IMAGE_INDEX}
-  #     - Effect: Allow  
-  #       Action:
-  #         - "xray:PutTraceSegments"
-  #         - "xray:PutTelemetryRecords"
-  #       Resource:
-  #         - "*"
-  #   events:
-  #     - http:
-  #         method: get
-  #         path: images
-  #         cors: true
-  #         authorizer: RS256Auth
-  #         reqValidatorName: RequestBodyValidator
-
-
   getImages:
     handler: src/lambda/http/getImages.handler
     iamRoleStatements:
@@ -75,7 +55,7 @@ functions:
         Action:
           - dynamodb:Query
         # Query from Index Table for fast
-        Resource: arn:aws:dynamodb:${self:provider.region}:*:table/${self:provider.environment.IMAGES_TABLE}/index/${self:provider.environment.IMAGE_INDEX}
+        Resource: arn:aws:dynamodb:${self:provider.region}:*:table/${self:provider.environment.IMAGES_TABLE}
       - Effect: Allow # xray permissions (required) 
         Action:
           - "xray:PutTraceSegments"

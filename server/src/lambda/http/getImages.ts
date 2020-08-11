@@ -13,6 +13,8 @@ export const handler: APIGatewayProxyHandler = async (event: APIGatewayProxyEven
     // authorize with JWT from event headers
     const authorization = event.headers.Authorization; 
     const jwtToken = authorization.split(' ')[1]; 
+    
+    logger.info('jwt token ', jwtToken); 
 
     // get all images: 
     const images = await getAllImages(jwtToken); 
