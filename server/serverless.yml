@@ -61,7 +61,7 @@ functions:
         events:
             - http:
                 method: get
-                path: todos
+                path: images
                 cors: true
                 authorizer: RS256Auth
                 reqValidatorName: RequestBodyValidator
@@ -82,14 +82,14 @@ resources:
         # Response from 400+ error: 
         GatewayResponseDefault4XX:
             Type: AWS::ApiGateway::GatewayResponse
-            Properties: 
-                ResponseParameters: 
-                    gatewayresponse.header.Access-Control-Allow-Origin: "*"
-                    gatewayresponse.header.Access-Control-Allow-Headers: "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token'"
-                    gatewayresponse.header.Access-Control-Allow-Methods: "'*'"
+            Properties:
+                ResponseParameters:
+                gatewayresponse.header.Access-Control-Allow-Origin: "'*'"
+                gatewayresponse.header.Access-Control-Allow-Headers: "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token'"
+                gatewayresponse.header.Access-Control-Allow-Methods: "'*'"
                 ResponseType: DEFAULT_4XX
-                RestApiId: 
-                    Ref: ApiGatewayRestApi 
+                RestApiId:
+                Ref: ApiGatewayRestApi
 
         # Images DynamoDB Table: 
         ImagesDynamoDBTable: 
