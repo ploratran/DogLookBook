@@ -10,6 +10,18 @@
 
 ``` npm install @types/jsonwebtoken @types/elasticsearch aws-sdk serverless-aws-documentation serverless-dynamodb-local serverless-iam-roles-per-function serverless-reqvalidator-plugin serverless-plugin-tracing --save-dev```
 
+### DynamoDB Table Schema: 
+
+| **PK**     | **SK**      |          **attributes**            |
+| ---------- | ------------| ---------------------------------- |
+| **userId** | **imageId** | createdAt | imageUrl | description |
+
+#### **Global Index Table Schema:**
+
+| **PK**      | **SK**        |          **attributes**         |
+| ----------  | ------------- | ------------------------------- |
+| **imageId** | **createdAt** | userId | imageUrl | description |
+
 ### Models: 
 
 1. **Image Item Model:**
@@ -60,7 +72,7 @@ Field(s) required when make a request to update an image:
         ├── Jwt.ts
         ├── JwtPayload.ts
     ├── businessLogic
-        ├── postLogic.ts
+        ├── imageLogic.ts
     ├── dataLayer
         ├── accessLayer.ts
     ├── lambda
@@ -70,7 +82,7 @@ Field(s) required when make a request to update an image:
             ├── createImage.ts
             ├── deleteImage.ts
             ├── generateUpload.ts
-            ├── getImage.ts
+            ├── getImages.ts
             ├── updateImage.ts
     ├── model-interfaces
         ├── ImageModel.ts
