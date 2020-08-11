@@ -16,8 +16,8 @@ provider:
   region: ${opt:region, 'us-east-2'}
 
   tracing: 
-      lambda: true
-      apiGateway: true
+    lambda: true
+    apiGateway: true
 
   environment: 
       IMAGES_TABLE: dog-Images-${self:provider.stage}
@@ -45,7 +45,30 @@ functions:
   RS256Auth: 
     handler: src/lambda/auth/auth0Authorizer.handler
 
-  GetImages:
+  # GetImages:
+  #   handler: src/lambda/http/getImages.handler
+  #   iamRoleStatements:
+  #     - Effect: Allow # permission to Query table
+  #       Action:
+  #         - dynamodb:Query
+  #       # Query from Index Table for fast
+  #       Resource: arn:aws:dynamodb:${self:provider.region}:*:table/${self:provider.environment.IMAGES_TABLE}/index/${self:provider.environment.IMAGE_INDEX}
+  #     - Effect: Allow  
+  #       Action:
+  #         - "xray:PutTraceSegments"
+  #         - "xray:PutTelemetryRecords"
+  #       Resource:
+  #         - "*"
+  #   events:
+  #     - http:
+  #         method: get
+  #         path: images
+  #         cors: true
+  #         authorizer: RS256Auth
+  #         reqValidatorName: RequestBodyValidator
+
+
+  getImages:
     handler: src/lambda/http/getImages.handler
     iamRoleStatements:
       - Effect: Allow # permission to Query table
@@ -66,26 +89,7 @@ functions:
           cors: true
           authorizer: RS256Auth
           reqValidatorName: RequestBodyValidator
-
-  # getImages: 
-  #   handler: src/lambda/http/getImages.handler
-  #   iamRoleStatements:
-  #     - Effect: Allow
-  #       Action: 
-  #         - dynamodb:Query # allow to perform Query in IMAGES_TABLE
-  #       Resource: arn:aws:dynamodb:${self:provider.region}:*:table/${self:provider.environment.IMAGES_TABLE}
-  #     - Effect: Allow 
-  #       Action: 
-  #         - "xray:PutTraceSegments"
-  #         - "xray:PutTelementryRecords"
-  #       Resource: 
-  #         - "*"
-  #   events:
-  #       - http:
-  #         method: get
-  #         path: images
-  #         cors: true
-  #         authorizer: RS256Auth
+  
 
 resources: 
   Resources:

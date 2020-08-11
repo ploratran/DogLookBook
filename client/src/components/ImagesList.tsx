@@ -15,7 +15,7 @@ interface ImagesListState {
 
 const ImagesList = (props: ImagesListProps) => {
 
-    const [images, setImages] = React.useState<ImagesListState["images"]>([]); 
+    const [images, setImages] = React.useState<ImagesListState>({ images: [] }); 
 
     const handleCreateImage = () => {
         props.history.push(`/images/create`); 
