@@ -1,124 +1,111 @@
 service: 
-    name: dogram
+  name: dogram
 
 plugins:
-    - serverless-webpack
-    - serverless-iam-roles-per-function # able to define iam role each function
-    - serverless-aws-documentation
-    - serverless-reqvalidator-plugin
-    - serverless-dynamodb-local # emulate DynamoDB locally 
-    - serverless-plugin-tracing
+  - serverless-webpack
+  - serverless-iam-roles-per-function # able to define iam role each function
+  - serverless-aws-documentation
+  - serverless-dynamodb-local # emulate DynamoDB locally 
+  - serverless-plugin-tracing
 
-provider: 
-    name: aws
-    runtime: nodejs12.x
-    stage: ${opt:stage, 'dev'}
-    region: ${opt:region, 'us-east-2'}
+provider:
+  name: aws
+  runtime: nodejs12.x
 
-    tracing: 
-        lambda: true
-        apiGateway: true
+  stage: ${opt:stage, 'dev'}
+  region: ${opt:region, 'us-east-2'}
 
-    environment: 
-        IMAGES_TABLE: dog-Images-${self:provider.stage}
-        IMAGES_S3_BUCKET: ploratran-dog-abc123-${self:provider.stage}
-        IMAGE_INDEX: ploratran-index-table-${self:provider.stage }
-        SIGNED_URL_EXPIRATION: 300
+  tracing: 
+      lambda: true
+      apiGateway: true
+
+  environment: 
+      IMAGES_TABLE: dog-Images-${self:provider.stage}
+      IMAGES_S3_BUCKET: ploratran-dog-abc123-${self:provider.stage}
+      IMAGE_INDEX: ploratran-index-table-${self:provider.stage }
+      SIGNED_URL_EXPIRATION: 300
 
 custom: 
-    documentation: 
-        api: 
-            info: 
-                version: v1.0.0
-                title: Dogram API 
-                description: Udacity Serverless Capstone Project
-        # JSON Schema to validate HTTP request using serverless-reqvalidator-plugin
-        models: 
-            - name: CreateRequest
-              contentType: application/json
-              schema: ${file(req-validator/create-image-request.json)}
-            - name: UpdateRequest
-              contentType: application/json
-              schema: ${file(req-validator/update-image-request.json)}
+  documentation: 
+    api: 
+      info: 
+        version: v1.0.0
+        title: Dogram API 
+        description: Udacity Serverless Capstone Project
+# JSON Schema to validate HTTP request using serverless-reqvalidator-plugin
+    models: 
+      - name: CreateRequest
+        contentType: application/json
+        schema: ${file(req-validator/create-image-request.json)}
+      - name: UpdateRequest
+        contentType: application/json
+        schema: ${file(req-validator/update-image-request.json)}
 
 functions: 
-    RS256Auth: 
-        handler: src/lambda/auth/auth0Authorizer.handler
+  RS256Auth: 
+    handler: src/lambda/auth/auth0Authorizer.handler
 
-    getImages: 
-        handler: src/lambda/http/getImages.handler
-        iamRoleStatements:
-            - Effect: Allow
-              Action: 
-                - dynamodb:Query # allow to perform Query in IMAGES_TABLE
-              Resource: arn:aws:dynamodb:${self:provider.region}:*:table/${self:provider.environment.IMAGES_TABLE}
-            - Effect: Allow 
-              Action: 
-                - "xray:PutTraceSegments"
-                - "xray:PutTelementryRecords"
-              Resource: 
-                - "*"
-        events:
-            - http:
-                method: get
-                path: images
-                cors: true
-                authorizer: RS256Auth
-                reqValidatorName: RequestBodyValidator
-              
+  getImages: 
+    handler: src/lambda/http/getImages.handler
+    iamRoleStatements:
+      - Effect: Allow
+        Action: 
+          - dynamodb:Query # allow to perform Query in IMAGES_TABLE
+        Resource: arn:aws:dynamodb:${self:provider.region}:*:table/${self:provider.environment.IMAGES_TABLE}
+      - Effect: Allow 
+        Action: 
+          - "xray:PutTraceSegments"
+          - "xray:PutTelementryRecords"
+        Resource: 
+          - "*"
+    events:
+        - http:
+          method: get
+          path: images
+          cors: true
+          authorizer: RS256Auth
 
 resources: 
-    Resources:
-        # Validate request body: 
-        RequestBodyValidator:
-            Type: AWS::ApiGateway::RequestValidator 
-            Properties: 
-                Name: "request-body-validator"
-                RestApiId: 
-                    Ref: ApiGatewayRestApi
-                ValidateRequestBody: true
-                ValidateRequestParameters: false
-        
-        # Response from 400+ error: 
-        GatewayResponseDefault4XX:
-            Type: AWS::ApiGateway::GatewayResponse
-            Properties:
-                ResponseParameters:
-                gatewayresponse.header.Access-Control-Allow-Origin: "'*'"
-                gatewayresponse.header.Access-Control-Allow-Headers: "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token'"
-                gatewayresponse.header.Access-Control-Allow-Methods: "'*'"
-                ResponseType: DEFAULT_4XX
-                RestApiId:
-                Ref: ApiGatewayRestApi
+  Resources:
+    
+    # Response from 400+ error: 
+    GatewayResponseDefault4XX:
+      Type: AWS::ApiGateway::GatewayResponse
+      Properties:
+        ResponseParameters:
+          gatewayresponse.header.Access-Control-Allow-Origin: "'*'"
+          gatewayresponse.header.Access-Control-Allow-Headers: "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token'"
+          gatewayresponse.header.Access-Control-Allow-Methods: "'*'"
+        ResponseType: DEFAULT_4XX
 
-        # Images DynamoDB Table: 
-        ImagesDynamoDBTable: 
-            Type: AWS::DynamoDB::Table 
-            Properties: 
-                AttributeDefinitions: 
-                    - AttributeName: userId # partition key
-                      AttributeType: S 
-                    - AttributeName: imageId 
-                      AttributeType: S 
-                    - AttributeName: createdAt
-                      AttributeType: S
-                KeySchema: 
-                    # 1:M (1 user => Many images)
-                    - AttributeName: userId
-                      KeyType: HASH # partition key
-                    - AttributeName: imageId 
-                      KeyType: RANGE # sort key
-                BillingMode: PAY_PER_REQUEST # On-demand Capacity Mode
-                TableName: ${self:provider.environment.IMAGES_TABLE}
+    # Images DynamoDB Table: 
+    ImagesDynamoDBTable: 
+      Type: AWS::DynamoDB::Table 
+      Properties: 
+        AttributeDefinitions: 
+          - AttributeName: userId # partition key
+            AttributeType: S 
+          - AttributeName: imageId 
+            AttributeType: S 
+          - AttributeName: createdAt
+            AttributeType: S
+        KeySchema: 
+          # 1:M (1 user => Many images)
+          - AttributeName: userId
+            KeyType: HASH # partition key
+          - AttributeName: imageId 
+            KeyType: RANGE # sort key
+        BillingMode: PAY_PER_REQUEST # On-demand Capacity Mode
+        TableName: ${self:provider.environment.IMAGES_TABLE}
 
-                # Secondary Index: 
-                GlobalSecondaryIndexes: 
-                    - IndexName: ${self:provider.environment.IMAGE_INDEX}
-                      Projection: 
-                        ProjectionType: ALL # Other options: KEYS_ONLY, INCLUDE 
-                      KeySchema: 
-                        - AttributeName: imageId # partition key must be same with base table 
-                          KeyType: HASH # partition key
-                        - AttributeName: createdAt 
-                          KeyType: RANGE 
-                      
+        # Secondary Index: 
+        GlobalSecondaryIndexes: 
+          - IndexName: ${self:provider.environment.IMAGE_INDEX}
+            Projection: 
+              ProjectionType: ALL # Other options: KEYS_ONLY, INCLUDE 
+            KeySchema: 
+              - AttributeName: userId # partition key must be same with base table 
+                KeyType: HASH # partition key
+              - AttributeName: createdAt 
+                KeyType: RANGE 
+                    
