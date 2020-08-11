@@ -45,28 +45,58 @@ functions:
   RS256Auth: 
     handler: src/lambda/auth/auth0Authorizer.handler
 
-  getImages: 
+  GetImages:
     handler: src/lambda/http/getImages.handler
     iamRoleStatements:
-      - Effect: Allow
-        Action: 
-          - dynamodb:Query # allow to perform Query in IMAGES_TABLE
-        Resource: arn:aws:dynamodb:${self:provider.region}:*:table/${self:provider.environment.IMAGES_TABLE}
-      - Effect: Allow 
-        Action: 
+      - Effect: Allow # permission to Query table
+        Action:
+          - dynamodb:Query
+        # Query from Index Table for fast
+        Resource: arn:aws:dynamodb:${self:provider.region}:*:table/${self:provider.environment.IMAGES_TABLE}/index/${self:provider.environment.IMAGE_INDEX}
+      - Effect: Allow # xray permissions (required) 
+        Action:
           - "xray:PutTraceSegments"
-          - "xray:PutTelementryRecords"
-        Resource: 
+          - "xray:PutTelemetryRecords"
+        Resource:
           - "*"
     events:
-        - http:
+      - http:
           method: get
           path: images
           cors: true
           authorizer: RS256Auth
+          reqValidatorName: RequestBodyValidator
+
+  # getImages: 
+  #   handler: src/lambda/http/getImages.handler
+  #   iamRoleStatements:
+  #     - Effect: Allow
+  #       Action: 
+  #         - dynamodb:Query # allow to perform Query in IMAGES_TABLE
+  #       Resource: arn:aws:dynamodb:${self:provider.region}:*:table/${self:provider.environment.IMAGES_TABLE}
+  #     - Effect: Allow 
+  #       Action: 
+  #         - "xray:PutTraceSegments"
+  #         - "xray:PutTelementryRecords"
+  #       Resource: 
+  #         - "*"
+  #   events:
+  #       - http:
+  #         method: get
+  #         path: images
+  #         cors: true
+  #         authorizer: RS256Auth
 
 resources: 
   Resources:
+    RequestBodyValidator:
+      Type: AWS::ApiGateway::RequestValidator
+      Properties: 
+        Name: 'request-body-validator'
+        RestApiId:
+          Ref: ApiGatewayRestApi
+        ValidateRequestBody: true
+        ValidateRequestParameters: false
     
     # Response from 400+ error: 
     GatewayResponseDefault4XX:
@@ -77,6 +107,8 @@ resources:
           gatewayresponse.header.Access-Control-Allow-Headers: "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token'"
           gatewayresponse.header.Access-Control-Allow-Methods: "'*'"
         ResponseType: DEFAULT_4XX
+        RestApiId:
+          Ref: ApiGatewayRestApi
 
     # Images DynamoDB Table: 
     ImagesDynamoDBTable: 
