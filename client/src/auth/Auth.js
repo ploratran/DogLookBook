@@ -94,6 +94,10 @@ export default class Auth {
         // remove the key 'isLoggedIn' flag from localStorage: 
         localStorage.removeItem('isLoggedIn');
 
+        this.auth0.logout({
+            return_to: window.location.origin,
+        }); 
+
         // return back to home route: 
         this.history.replace('/'); 
     }

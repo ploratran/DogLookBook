@@ -10,7 +10,7 @@ const ImageItem = (props: ImageCardProps) => {
     return (
         <Card>
             <Card.Content>
-                <Card.Header>{props.image.name}</Card.Header>
+                <Card.Header>{props.image.description}</Card.Header>
                 <Card.Description>{props.image.createdAt}</Card.Description>
                 {props.image.imageUrl && (
                     <Image src={props.image.imageUrl} />
