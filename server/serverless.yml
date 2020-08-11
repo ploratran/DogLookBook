@@ -42,6 +42,8 @@ custom:
               schema: ${file(req-validator/update-image-request.json)}
 
 functions: 
+    RS256Auth: 
+        handler: src/lambda/auth/auth0Authorizer.handler
 
     getImages: 
         handler: src/lambda/http/getImages.handler
@@ -49,19 +51,19 @@ functions:
             - Effect: Allow
               Action: 
                 - dynamodb:Query # allow to perform Query in IMAGES_TABLE
-              Resource: arn:aws:dynamodb:${self.provider.region}:*:table/${self:provider.environment.IMAGES_TABLE}
+              Resource: arn:aws:dynamodb:${self:provider.region}:*:table/${self:provider.environment.IMAGES_TABLE}
             - Effect: Allow 
               Action: 
                 - "xray:PutTraceSegments"
                 - "xray:PutTelementryRecords"
-
               Resource: 
                 - "*"
-        events: 
+        events:
             - http:
-                method: get 
-                path: images 
+                method: get
+                path: todos
                 cors: true
+                authorizer: RS256Auth
                 reqValidatorName: RequestBodyValidator
               
 
@@ -97,7 +99,7 @@ resources:
                     - AttributeName: userId # partition key
                       AttributeType: S 
                     - AttributeName: imageId 
-                    AttributeType: S 
+                      AttributeType: S 
                     - AttributeName: createdAt
                       AttributeType: S
                     - AttributeName: description
