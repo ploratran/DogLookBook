@@ -20,8 +20,8 @@ provider:
         apiGateway: true
 
     environment: 
-        IMAGES_TABLE: plortran-Images-${self:provider.stage}
-        IMAGES_S3_BUCKET: ploratran-images-abc123-${self:provider.stage}
+        IMAGES_TABLE: dog-Images-${self:provider.stage}
+        IMAGES_S3_BUCKET: ploratran-dog-abc123-${self:provider.stage}
         IMAGE_INDEX: ploratran-index-table-${self:provider.stage }
         SIGNED_URL_EXPIRATION: 300
 
