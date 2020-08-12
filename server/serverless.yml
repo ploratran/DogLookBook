@@ -15,17 +15,14 @@ provider:
   stage: ${opt:stage, 'dev'}
   region: ${opt:region, 'us-east-2'}
 
-  tracing: 
-    lambda: true
-    apiGateway: true
-    tracing: true # enable tracing
-    iamRoleStatements:
-      - Effect: "Allow" # xray permissions (required)
-        Action:
-          - "xray:PutTraceSegments"
-          - "xray:PutTelemetryRecords"
-        Resource:
-          - "*"
+  tracing: true # enable tracing
+  iamRoleStatements:
+    - Effect: "Allow" # xray permissions (required)
+      Action:
+        - "xray:PutTraceSegments"
+        - "xray:PutTelemetryRecords"
+      Resource:
+        - "*"
 
   environment: 
       IMAGES_TABLE: dog-Images-${self:provider.stage}
