@@ -1,6 +1,6 @@
 // Auth0 and AWS configuration for frontend: 
 
-export const apiEndpoint = 'https://ct2dnkzvxi.execute-api.us-east-2.amazonaws.com/dev'; 
+export const apiEndpoint = 'https://n4kzqqufff.execute-api.us-east-2.amazonaws.com/dev'; 
 
 // get info from auth0.com
 export const authConfig = {
