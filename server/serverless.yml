@@ -18,6 +18,14 @@ provider:
   tracing: 
     lambda: true
     apiGateway: true
+    tracing: true # enable tracing
+    iamRoleStatements:
+      - Effect: "Allow" # xray permissions (required)
+        Action:
+          - "xray:PutTraceSegments"
+          - "xray:PutTelemetryRecords"
+        Resource:
+          - "*"
 
   environment: 
       IMAGES_TABLE: dog-Images-${self:provider.stage}
@@ -26,9 +34,6 @@ provider:
       SIGNED_URL_EXPIRATION: 300
 
 custom: 
-  webpack: 
-    webpackConfig: ./webpack.config.js 
-    includeModules: true  
   documentation: 
     api: 
       info: 
@@ -50,18 +55,18 @@ functions:
 
   getImages:
     handler: src/lambda/http/getImages.handler
-    iamRoleStatements:
-      - Effect: Allow # permission to Query table
-        Action:
-          - dynamodb:Query
-        # Query from Index Table for fast
-        Resource: arn:aws:dynamodb:${self:provider.region}:*:table/${self:provider.environment.IMAGES_TABLE}
-      - Effect: Allow # xray permissions (required) 
-        Action:
-          - "xray:PutTraceSegments"
-          - "xray:PutTelemetryRecords"
-        Resource:
-          - "*"
+    # iamRoleStatements:
+    #   - Effect: Allow # permission to Query table
+    #     Action:
+    #       - dynamodb:Query
+    #     # Query from Index Table for fast
+    #     Resource: arn:aws:dynamodb:${self:provider.region}:*:table/${self:provider.environment.IMAGES_TABLE}
+    #   - Effect: Allow # xray permissions (required) 
+    #     Action:
+    #       - "xray:PutTraceSegments"
+    #       - "xray:PutTelemetryRecords"
+    #     Resource:
+    #       - "*"
     events:
       - http:
           method: get
