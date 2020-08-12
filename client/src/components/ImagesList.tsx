@@ -28,7 +28,7 @@ const ImagesList = (props: ImagesListProps) => {
                 primary
                 size='huge'
                 className='add-button'
-                onClick={() => handleCreateImage}
+                onClick={handleCreateImage}
             >
                 Upload New Image 
             </Button>

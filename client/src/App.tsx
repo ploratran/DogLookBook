@@ -14,28 +14,12 @@ export interface AppProps {
 const App = (props: AppProps) => {
 
   const handleLogin = () => {
-    console.log("in")
     props.auth.login(); 
   }; 
 
   const handleLogout = () => {
-    console.log("out")
     props.auth.logout(); 
   };  
-
-  const generateMenu = () => {
-    return (
-      <Menu>
-        <Menu.Item name='home'>
-          {/* define path to Homepage */}
-          <Link to='/'>Home</Link>
-        </Menu.Item>
-
-        {/* define login/logout button */}
-        <Menu.Menu position='right'>{logInLogOutButton()}</Menu.Menu>
-      </Menu>
-    )
-  }; 
 
   const logInLogOutButton = () => {
     if (props.auth.isAuthenticated()) {
@@ -53,12 +37,24 @@ const App = (props: AppProps) => {
     }
   };
 
+  // define home and login/logout button headbar: 
+  const generateMenu = () => {
+    return (
+      <Menu>
+        <Menu.Item name='home'>
+          {/* define path to Homepage */}
+          <Link to='/'>Home</Link>
+        </Menu.Item>
+
+        {/* define login/logout button */}
+        <Menu.Menu position='right'>{logInLogOutButton()}</Menu.Menu>
+      </Menu>
+    )
+  }; 
+
   // define route for each component: 
   const generateCurrentPage = () => {
 
-    // if (!props.auth.isAuthenticated()) {
-    //   return <Login auth={props.auth}/>
-    // }
     return (
       <Switch>
         {/* Route to Create Image */}
@@ -71,13 +67,14 @@ const App = (props: AppProps) => {
         />
 
         {/* Route to display images */}
-        <Route 
+        <Route path="/" exact component={ImagesList} />
+        {/* <Route 
           path="/images"
           exact
           render={props => {
             return <ImagesList  {...props} />
           }}
-        />
+        /> */}
 
         {/* Route to display Not Found */}
         <Route component={NotFound}/>
