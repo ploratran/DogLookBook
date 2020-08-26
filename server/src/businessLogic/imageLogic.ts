@@ -14,5 +14,5 @@ export async function getAllImages(jwtToken: string): Promise<ImageItem[]> {
     const userId = parseUserId(jwtToken); 
     logger.info(`userId: ${userId} `); 
     
-    return accessLayer.getImages(userId); 
+    return await accessLayer.getImages(userId); 
 }
