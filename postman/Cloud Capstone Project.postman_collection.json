@@ -1,0 +1,159 @@
+{
+	"info": {
+		"_postman_id": "11394a6f-2d69-48d1-bf94-d2ae59f82980",
+		"name": "Cloud Capstone Project",
+		"description": "Udacity Cloud Developer Capstone ",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "GET images",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{authToken}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "https://{{apiId}}.{{regions}}.amazonaws.com/dev/images",
+					"protocol": "https",
+					"host": [
+						"{{apiId}}",
+						"{{regions}}",
+						"amazonaws",
+						"com"
+					],
+					"path": [
+						"dev",
+						"images"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "CREATE images",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Authorization",
+						"value": "Bearer {{authToken}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"description\": \"Test 4th image\"\n}"
+				},
+				"url": {
+					"raw": "https://{{apiId}}.{{regions}}.amazonaws.com/dev/images",
+					"protocol": "https",
+					"host": [
+						"{{apiId}}",
+						"{{regions}}",
+						"amazonaws",
+						"com"
+					],
+					"path": [
+						"dev",
+						"images"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "PUT image",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Authorization",
+						"value": "Bearer {{authToken}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"description\": \"edit new description\"\n}"
+				},
+				"url": {
+					"raw": "https://{{apiId}}.{{regions}}.amazonaws.com/dev/images/160f95a6-d447-452b-a5f1-8f9fd621cd15",
+					"protocol": "https",
+					"host": [
+						"{{apiId}}",
+						"{{regions}}",
+						"amazonaws",
+						"com"
+					],
+					"path": [
+						"dev",
+						"images",
+						"160f95a6-d447-452b-a5f1-8f9fd621cd15"
+					]
+				},
+				"description": "edit an image's description"
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"id": "ab62c93d-963f-4ce6-8c3f-6473d46d647d",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"id": "557c44af-9e40-471d-9efb-1e607744fcdb",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"id": "aec21ea2-0b63-435d-997d-4961671d4ab9",
+			"key": "apiId",
+			"value": ""
+		},
+		{
+			"id": "136f61db-621d-4773-aad0-7b425bc8a110",
+			"key": "authToken",
+			"value": ""
+		},
+		{
+			"id": "39c81f74-768f-43de-8f6b-5f09bd21e6e4",
+			"key": "regions",
+			"value": ""
+		},
+		{
+			"id": "ac212bef-6319-484d-bf31-ab1e1457d98d",
+			"key": "imageId",
+			"value": ""
+		}
+	],
+	"protocolProfileBehavior": {}
+}
