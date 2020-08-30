@@ -7,6 +7,8 @@ plugins:
   - serverless-aws-documentation # documenting app info
   - serverless-dynamodb-local # emulate DynamoDB locally 
   - serverless-plugin-tracing
+  - serverless-dynamodb-local
+  - serverless-offline
 
 provider:
   name: aws
@@ -24,6 +26,15 @@ provider:
       SIGNED_URL_EXPIRATION: 300
 
 custom: 
+  serverless-offline: 
+    port: 3003 # run server port 3003
+  dynamodb: 
+    start: 
+      port: 8000 # run dynamodb port 8000
+      inMemory: true # store data in memory
+      migrate: true # create table according to definition in YAML
+    stages: 
+      - dev
   documentation: 
     api: 
       info: 

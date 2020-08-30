@@ -10,6 +10,12 @@
 
 ``` npm install @types/jsonwebtoken @types/elasticsearch aws-sdk serverless-aws-documentation serverless-dynamodb-local serverless-iam-roles-per-function serverless-reqvalidator-plugin serverless-plugin-tracing --save-dev```
 
+### How to run DynamoDB Locally: 
+1. Install Serverless Offline: ```npm install serverless-offline --save-dev```
+2. Run DynamoDB locally: ```sls dynamodb install```, then ```sls dynamodb start```
+3. Run a web server locally: ```sls offline```
+
+
 ### DynamoDB Table Schema: 
 
 | **PK**     | **SK**      | **attributes** | | |
