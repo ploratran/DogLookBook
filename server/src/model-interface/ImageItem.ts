@@ -3,5 +3,5 @@ export interface ImageItem {
     imageId: string, 
     description: string, 
     createdAt: string, 
-    imageUrl: string, 
+    imageUrl?: string, 
 }
