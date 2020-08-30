@@ -1,3 +1,3 @@
-export interface UpdateItemRequest {
+export interface UpdateImageRequest {
     description: string, 
 }

@@ -5,6 +5,7 @@ import { AccessLayer } from '../dataLayer/accessLayer';
 import { parseUserId } from '../utils/parseUserId'; 
 import { CreateImageRequest } from '../req-interface/CreateImageRequest'; 
 import * as moment from 'moment-timezone'; 
+import { UpdateImageRequest } from '../req-interface/UpdateImageRequest'; 
 
 const logger = createLogger('imageLogic.ts'); 
 
@@ -40,4 +41,13 @@ export async function createImage(
         createdAt: currentTime, 
         ...newImage, 
     }) as ImageItem;  
+}
+
+// update an image item based on userId and imageId: 
+export async function updateImage(
+    jwtToken: string, 
+    imageId: string, 
+    updateImageItem: UpdateImageRequest,
+) {
+    await accessLayer.updateImage(parseUserId(jwtToken), imageId, updateImageItem); 
 }

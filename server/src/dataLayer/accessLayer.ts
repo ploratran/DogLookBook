@@ -2,6 +2,7 @@ import * as AWS from 'aws-sdk';
 import * as AWSXRay from 'aws-xray-sdk'; 
 import { DocumentClient } from 'aws-sdk/clients/dynamodb';
 import { ImageItem } from '../model-interface/ImageItem'; 
+import { ImageUpdate } from '../model-interface/ImageUpdate'; 
 import { createLogger } from '../utils/logger'; 
 
 const XAWS = AWSXRay.captureAWS(AWS); // X-Ray tracing
@@ -51,7 +52,27 @@ export class AccessLayer {
     }
 
     // UPDATE image item based on userId and imageId: 
-    // based on ImageModel interface (description)
+    // based on ImageModel Request Interface (description)
+    async updateImage(userId: string, imageId: string, image: ImageUpdate) {
+        logger.info(`Update image with new description as ${image.description} for user ${userId}`); 
+
+        await this.docClient.update({
+            TableName: this.imagesTable, 
+            // update using key userId and imageId: 
+            Key: {
+                userId, 
+                imageId, 
+            }, 
+            UpdateExpression: 
+                'set #description = :description', 
+            ExpressionAttributeValues: {
+                ':description': image.description,
+            },
+            ExpressionAttributeNames: {
+                '#description': 'description', 
+            }
+        }).promise(); 
+    }
     
     // DELETE image item based on userId and imageId
 }
