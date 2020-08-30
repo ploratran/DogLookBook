@@ -10,6 +10,7 @@ export const handler: APIGatewayProxyHandler = async (event: APIGatewayProxyEven
     logger.info(`Processing events: ${event}`);
 
     const newImage: CreateImageRequest = JSON.parse(event.body); 
+    logger.info(`New image: ${newImage}`);
 
     const authorization = event.headers.Authorization; 
     const jwtToken = authorization.split(' ')[1]; 

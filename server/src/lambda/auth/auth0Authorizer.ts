@@ -1,11 +1,11 @@
 // **** WORK WITH MANY USER ACCOUNTS **** //
-import { CustomAuthorizerEvent, CustomAuthorizerResult } from 'aws-lambda'; 
-import 'source-map-support/register';
-import { verify, decode } from 'jsonwebtoken'; 
-import { createLogger } from '../../utils/logger';  // winston logger
-import axios from 'axios'; 
-import { Jwt } from '../../auth/Jwt'; // interface of JWT
-import { JwtPayload } from '../../auth/JwtPayload'; // return type of verified token
+import { CustomAuthorizerEvent, CustomAuthorizerResult } from 'aws-lambda'
+import 'source-map-support/register'
+import { verify, decode } from 'jsonwebtoken'
+import { createLogger } from '../../utils/logger' // winston logger
+import axios from 'axios'
+import { Jwt } from '../../auth/Jwt' // interface of JWT
+import { JwtPayload } from '../../auth/JwtPayload' // return type of verified token
 
 const logger = createLogger('auth')
 
