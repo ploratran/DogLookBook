@@ -21,7 +21,7 @@ export const handler: APIGatewayProxyHandler = async (event: APIGatewayProxyEven
     return {
         statusCode: 201, 
         body: JSON.stringify({
-            item: newItem,
+            item: newItem, // return the newly created image
         }), 
         headers: {
             'Access-Control-Allow-Origin': '*',

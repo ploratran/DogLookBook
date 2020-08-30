@@ -4,6 +4,7 @@ import { ImageItem } from '../model-interface/ImageItem';
 import { AccessLayer } from '../dataLayer/accessLayer'; 
 import { parseUserId } from '../utils/parseUserId'; 
 import { CreateImageRequest } from '../req-interface/CreateImageRequest'; 
+import * as moment from 'moment-timezone'; 
 
 const logger = createLogger('imageLogic.ts'); 
 
@@ -29,13 +30,14 @@ export async function createImage(
 
     const imageId = uuid.v4(); // generate unique image id: 
     const userId = parseUserId(jwtToken); 
+    const currentTime = moment().tz("America/Los_Angeles").format("MMM DD, YYYY hh:mm:ss a"); 
 
     logger.info(`Create image for user ${userId}`); 
 
     return await accessLayer.createImage({
         userId, 
         imageId, 
-        createdAt: new Date().toISOString(), 
+        createdAt: currentTime, 
         ...newImage, 
     }) as ImageItem;  
 }
