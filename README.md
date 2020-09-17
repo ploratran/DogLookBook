@@ -21,8 +21,10 @@ A capstone project called **Dogram** to graduate Udacity Cloud Developer Nanodeg
 - Auth0 using RS256 Algorithm
 
 ## Getting Started:
-### Go to [Backend](server)
-### Go to [Frontend]
+### Go to [Backend](server) by running: 
+```cd server```
+### Go to [Frontend](client) by running:
+```cd client```
 
 ## Endpoints: 
 | **Method** | **endpoint** |
