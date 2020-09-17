@@ -21,7 +21,8 @@ export async function getAllImages(jwtToken: string): Promise<ImageItem[]> {
     return await accessLayer.getImages(userId); 
 }
 
-// create new image with corresponding userId: 
+// create new image with corresponding userId 
+// return the newly created ImageItem
 export async function createImage(
     newImage: CreateImageRequest, 
     jwtToken: string
@@ -29,17 +30,20 @@ export async function createImage(
 
     logger.info(`Insert new image`); 
 
+    // create a uniqe imageId and get userID
     const imageId = uuid.v4(); // generate unique image id: 
     const userId = parseUserId(jwtToken); 
+    // format time using Moment.js: 
     const currentTime = moment().tz("America/Los_Angeles").format("MMM DD, YYYY hh:mm:ss a"); 
 
     logger.info(`Create image for user ${userId}`); 
 
+    // pass imageId, userId and createdAt
     return await accessLayer.createImage({
         userId, 
         imageId, 
         createdAt: currentTime, 
-        ...newImage, 
+        ...newImage, // description, imageUrl
     }) as ImageItem;  
 }
 
@@ -47,7 +51,15 @@ export async function createImage(
 export async function updateImage(
     jwtToken: string, 
     imageId: string, 
-    updateImageItem: UpdateImageRequest,
+    updateImage: UpdateImageRequest,
 ) {
-    await accessLayer.updateImage(parseUserId(jwtToken), imageId, updateImageItem); 
+    await accessLayer.updateImage(parseUserId(jwtToken), imageId, updateImage); 
+}
+
+// delete an image based on userId and imageId: 
+export async function deleteImage(
+    jwtToken: string, 
+    imageId: string, 
+) {
+    await accessLayer.deleteImage(parseUserId(jwtToken), imageId); 
 }

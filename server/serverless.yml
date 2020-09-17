@@ -54,7 +54,7 @@ functions:
   RS256Auth: 
     handler: src/lambda/auth/auth0Authorizer.handler
     iamRoleStatements:
-      - Effect: "Allow" # xray permissions
+      - Effect: Allow # xray permissions
         Action:
           - "xray:PutTraceSegments"
           - "xray:PutTelemetryRecords"
@@ -82,7 +82,7 @@ functions:
           cors: true
           authorizer: RS256Auth
           reqValidatorName: RequestBodyValidator
-  
+
   createImage: 
     handler: src/lambda/http/createImage.handler
     iamRoleStatements:
@@ -90,7 +90,7 @@ functions:
         Action:
           - dynamodb:PutItem # allow to insert new item into table
         Resource: arn:aws:dynamodb:${self:provider.region}:*:table/${self:provider.environment.IMAGES_TABLE}
-      - Effect: "Allow" # xray permissions
+      - Effect: Allow # xray permissions
         Action:
           - "xray:PutTraceSegments"
           - "xray:PutTelemetryRecords"
@@ -116,7 +116,7 @@ functions:
         Action:
           - dynamodb:UpdateItem # allow to update new item in the table
         Resource: arn:aws:dynamodb:${self:provider.region}:*:table/${self:provider.environment.IMAGES_TABLE}
-      - Effect: "Allow" # xray permissions
+      - Effect: Allow # xray permissions
         Action:
           - "xray:PutTraceSegments"
           - "xray:PutTelemetryRecords"
@@ -135,9 +135,33 @@ functions:
             requestModels: 
               'application/json': UpdateRequest
 
-
+  deleteImage: 
+    handler: src/lambda/http/deleteImage.handler
+    iamRoleStatements:
+      - Effect: Allow
+        Action:
+          - dynamodb:DeleteItem # allow to update new item in the table
+        Resource: arn:aws:dynamodb:${self:provider.region}:*:table/${self:provider.environment.IMAGES_TABLE}
+      - Effect: Allow # xray permissions
+        Action:
+          - "xray:PutTraceSegments"
+          - "xray:PutTelemetryRecords"
+        Resource:
+          - "*"
+    events: 
+      - http:
+          method: delete # PUT method
+          path: images/{imageId} # update based on imageId
+          cors: true
+          authorizer: RS256Auth
+          reqValidatorName: RequestBodyValidator
+          documentation: 
+            summary: Delete an image
+            description: Delete an image
+  
 resources: 
   Resources:
+    # Validator Request Body: 
     RequestBodyValidator:
       Type: AWS::ApiGateway::RequestValidator
       Properties: 

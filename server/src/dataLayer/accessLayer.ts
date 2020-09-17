@@ -5,11 +5,13 @@ import { ImageItem } from '../model-interface/ImageItem';
 import { ImageUpdate } from '../model-interface/ImageUpdate'; 
 import { createLogger } from '../utils/logger'; 
 
-const XAWS = AWSXRay.captureAWS(AWS); // X-Ray tracing
+const XAWS = AWSXRay.captureAWS(AWS); // enabled X-Ray tracing
 
+// log in AWS Cloudwatch 
 const logger = createLogger('Access Layer'); 
 
-export class AccessLayer {
+// create a class for CRUD methods: 
+export class AccessLayer { 
     constructor (
         // create document client of AWS DynamoDB: 
         private readonly docClient: DocumentClient = createDynamoDBClient(), 
@@ -23,7 +25,8 @@ export class AccessLayer {
     async getImages(userId: string): Promise<ImageItem[]> {
         logger.info(`Fetching images item from user ${userId}`); 
 
-        // use .query() with userId as key: 
+        // use .query() with userId as key:
+        // query images based on userId:  
         const result = await this.docClient.query({
             TableName: this.imagesTable, // base table
             IndexName: this.indexTable,  // LSIndex table for faster query
@@ -33,17 +36,17 @@ export class AccessLayer {
         }).promise(); 
 
         // return images as an array of objects
-        const images = result.Items; 
-        return images as ImageItem[]; 
+        return result.Items as ImageItem[];
     }
 
-    // CREATE image
+    // CREATE image (use PUT)
     // insert new image into Images Table
+    // return as a single ImageItem
     async createImage(image: ImageItem): Promise<ImageItem> {
         logger.info(`Save new ${image.description} into ${this.imagesTable}`); 
 
+        // insert newly created image into base table
         await this.docClient.put({
-            // insert newly created image into base table
             TableName: this.imagesTable, 
             Item: image, 
         }).promise(); 
@@ -52,29 +55,33 @@ export class AccessLayer {
     }
 
     // UPDATE image item based on userId and imageId: 
-    // based on ImageModel Request Interface (description)
+    // based on ImageUpdate Interface (description)
     async updateImage(userId: string, imageId: string, image: ImageUpdate) {
-        logger.info(`Update image with new description as ${image.description} for user ${userId}`); 
+        logger.info(`Updating image: ${imageId}`); 
 
         await this.docClient.update({
             TableName: this.imagesTable, 
-            // update using key userId and imageId: 
-            Key: {
+            Key: { // update based on key userId and imageId: 
                 userId, 
                 imageId, 
             }, 
-            UpdateExpression: 
-                'set #description = :description', 
-            ExpressionAttributeValues: {
-                ':description': image.description,
-            },
-            ExpressionAttributeNames: {
-                '#description': 'description', 
-            }
-        }).promise(); 
+            UpdateExpression: 'set description = :newdescription', 
+            ExpressionAttributeValues: { ':newdescription': image.description }
+        }).promise();
     }
     
     // DELETE image item based on userId and imageId
+    async deleteImage(userId: string, imageId: string) {
+        logger.info(`Deleting image ${imageId}`); 
+
+        await this.docClient.delete({
+            TableName: this.imagesTable, 
+            Key: {
+                userId, 
+                imageId, 
+            }
+        }).promise(); 
+    }
 }
 
 const createDynamoDBClient = () => {
