@@ -176,7 +176,7 @@ functions:
     events:
       - http:
           method: post
-          path: images/{imageId}/attachment
+          path: images/s3/{imageId}
           cors: true
           authorizer: RS256Auth
     
