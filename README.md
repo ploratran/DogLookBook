@@ -26,12 +26,12 @@ A capstone project called **Dogram** to graduate Udacity Cloud Developer Nanodeg
 
 ## Endpoints: 
 | **Method** | **endpoint** |
-| ---------- | |
-| **GET**    | |
-| **POST**   | |
-| **UPDATE** | |
-| **DELETE** | |
-| **POST**   | |
+| ---------- | ------------ |
+| **GET**    | `https://stzf6sj4g6.execute-api.us-east-2.amazonaws.com/dev/images`|
+| **POST**   | `https://stzf6sj4g6.execute-api.us-east-2.amazonaws.com/dev/images`|
+| **PATCH**  | `https://stzf6sj4g6.execute-api.us-east-2.amazonaws.com/dev/images/{imageId}`|
+| **DELETE** | `https://stzf6sj4g6.execute-api.us-east-2.amazonaws.com/dev/images/{imageId}`|
+| **POST**   | `https://stzf6sj4g6.execute-api.us-east-2.amazonaws.com/dev/images/s3/{imageId}`|
 
 ## Image Model
 Each Image item has the following fields: 
