@@ -19,14 +19,14 @@
 ### DynamoDB Table Schema: 
 
 | **PK**     | **SK**      | **attributes** | | |
-| ---------- | ------------| ---------------------------------- |
+| ---------- | :----------:| :--------------------------------: |
 | **userId** | **imageId** | createdAt | imageUrl | description |
 
 #### **Global Index Table Schema:**
 
 | **PK**      | **SK**        | **attributes** | | |
-| ----------  | ------------- | ------------------------------- |
-| **imageId** | **createdAt** | userId | imageUrl | description |
+| ----------  | :-----------: | :-----------------------------: |
+| **userId** | **createdAt** | userId | imageUrl | description |
 
 ### Models: 
 
