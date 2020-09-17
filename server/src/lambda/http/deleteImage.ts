@@ -2,6 +2,7 @@ import 'source-map-support/register';
 import { APIGatewayProxyEvent, APIGatewayProxyResult, APIGatewayProxyHandler } from 'aws-lambda';
 import { createLogger } from '../../utils/logger'; 
 import { deleteImage } from '../../businessLogic/imageLogic';
+import { getAuthorization } from '../../utils/getAuthorization'; 
 
 const logger = createLogger('Delete Image Item'); 
 
@@ -12,7 +13,8 @@ export const handler: APIGatewayProxyHandler = async (event: APIGatewayProxyEven
     const imageId = event.pathParameters.imageId; 
 
     // get userId JWT token: 
-    const userId = event.headers.Authorization.split(' ')[1]; 
+    // const userId = event.headers.Authorization.split(' ')[1]; 
+    const userId = getAuthorization(event);
 
     // delete image based on userId and imageId: 
     await deleteImage(userId, imageId); 

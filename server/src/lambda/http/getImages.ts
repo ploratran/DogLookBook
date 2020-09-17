@@ -2,6 +2,7 @@ import 'source-map-support/register';
 import { createLogger } from '../../utils/logger'; 
 import { APIGatewayProxyEvent, APIGatewayProxyResult, APIGatewayProxyHandler } from 'aws-lambda'; 
 import { getAllImages } from '../../businessLogic/imageLogic'; 
+import { getAuthorization } from '../../utils/getAuthorization';
 // import * as middy from 'middy'; 
 // import { cors } from 'middy/middlewares'; 
 
@@ -11,8 +12,10 @@ export const handler: APIGatewayProxyHandler = async (event: APIGatewayProxyEven
     logger.info('Processing event: ', event); 
 
     // authorize with JWT from event headers
-    const authorization = event.headers.Authorization; 
-    const jwtToken = authorization.split(' ')[1]; 
+    // const authorization = event.headers.Authorization; 
+    // const jwtToken = authorization.split(' ')[1]; 
+
+    const jwtToken = getAuthorization(event);  
     
     logger.info('jwt token ', jwtToken); 
 

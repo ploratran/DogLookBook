@@ -3,6 +3,7 @@ import { APIGatewayProxyEvent, APIGatewayProxyResult, APIGatewayProxyHandler } f
 import { CreateImageRequest } from '../../req-interface/CreateImageRequest'; 
 import { createImage } from '../../businessLogic/imageLogic'; 
 import { createLogger } from '../../utils/logger'; 
+import { getAuthorization } from '../../utils/getAuthorization';
 
 const logger = createLogger('Create Image'); 
 
@@ -10,7 +11,8 @@ export const handler: APIGatewayProxyHandler = async (event: APIGatewayProxyEven
 
     const newImage: CreateImageRequest = JSON.parse(event.body); 
 
-    const jwtToken = event.headers.Authorization.split(' ')[1]; 
+    // const jwtToken = event.headers.Authorization.split(' ')[1]; 
+    const jwtToken = getAuthorization(event); 
 
     const newItem = await createImage(newImage, jwtToken); 
 
