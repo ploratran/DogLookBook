@@ -65,8 +65,14 @@ export class AccessLayer {
                 userId, 
                 imageId, 
             }, 
-            UpdateExpression: 'set description = :newdescription', 
-            ExpressionAttributeValues: { ':newdescription': image.description }
+            UpdateExpression: 
+                'set #description = :description', 
+            ExpressionAttributeValues: {
+                ':description': image.description,
+            },
+            ExpressionAttributeNames: {
+                '#description': 'description', 
+            }
         }).promise();
     }
     
