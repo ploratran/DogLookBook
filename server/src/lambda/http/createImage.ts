@@ -10,12 +10,11 @@ export const handler: APIGatewayProxyHandler = async (event: APIGatewayProxyEven
 
     const newImage: CreateImageRequest = JSON.parse(event.body); 
 
-    const authorization = event.headers.Authorization; 
-    const jwtToken = authorization.split(' ')[1]; 
+    const jwtToken = event.headers.Authorization.split(' ')[1]; 
 
     const newItem = await createImage(newImage, jwtToken); 
 
-    logger.info(`New Image ${newItem}`);  
+    logger.info(`New Image ${Object.values(newItem)}`);  
 
     return {
         statusCode: 201, 

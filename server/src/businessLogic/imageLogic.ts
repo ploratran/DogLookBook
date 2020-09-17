@@ -11,7 +11,8 @@ const logger = createLogger('imageLogic.ts');
 
 const accessLayer = new AccessLayer(); 
 
-//query all images from the given JWT token:
+// query all images from the given JWT token
+// return an array of images:
 export async function getAllImages(jwtToken: string): Promise<ImageItem[]> {
     logger.info('get images in imageLogic.ts'); 
 
@@ -53,6 +54,7 @@ export async function updateImage(
     imageId: string, 
     updateImage: UpdateImageRequest,
 ) {
+    logger.info(`Update Image: ${imageId}`); 
     await accessLayer.updateImage(parseUserId(jwtToken), imageId, updateImage); 
 }
 
@@ -61,5 +63,13 @@ export async function deleteImage(
     jwtToken: string, 
     imageId: string, 
 ) {
+    logger.info(`Delete image: ${imageId}`)
     await accessLayer.deleteImage(parseUserId(jwtToken), imageId); 
+}
+
+// get pre-signed S3 URL: 
+export async function generateUploadUrl(imageId: string): Promise<string> {
+    logger.info(`Get S3 pre-signed url: `);
+
+    return await accessLayer.generateUploadUrl(imageId); 
 }

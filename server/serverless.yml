@@ -23,7 +23,7 @@ provider:
       IMAGES_TABLE: dog-Images-${self:provider.stage}
       IMAGES_S3_BUCKET: ploratran-dog-abc123-${self:provider.stage}
       IMAGE_INDEX: ploratran-index-table-${self:provider.stage }
-      SIGNED_URL_EXPIRATION: 300
+      # SIGNED_URL_EXPIRATION: 300
 
 custom: 
   serverless-offline: 
@@ -41,7 +41,7 @@ custom:
         version: v1.0.0
         title: Dogram API 
         description: Udacity Serverless Capstone Project
-# JSON Schema to validate HTTP request using serverless-reqvalidator-plugin
+    # JSON Schema to validate HTTP request using serverless-reqvalidator-plugin
     models: 
       - name: CreateRequest
         contentType: application/json
@@ -158,10 +158,64 @@ functions:
           documentation: 
             summary: Delete an image
             description: Delete an image
-  
+
+  generateUploadUrl: 
+    handler: src/lambda/http/generateUpload.handler
+    iamRoleStatements:
+      - Effect: Allow
+        Action:
+          - s3:PutObject # allow to PUT object to S3 bucket
+          - s3:GetObject # allow to GET object to S3 bucket
+        Resource: arn:aws:s3:::${self:provider.environment.IMAGES_S3_BUCKET}/*
+      - Effect: Allow # xray permissions
+        Action:
+          - "xray:PutTraceSegments"
+          - "xray:PutTelemetryRecords"
+        Resource:
+          - "*"
+    events:
+      - http:
+          method: post
+          path: images/{imageId}/attachment
+          cors: true
+          authorizer: RS256Auth
+    
 resources: 
   Resources:
-    # Validator Request Body: 
+    # 5) Configure S3 bucket policy: 
+    BucketPolicy:
+      Type: AWS::S3::BucketPolicy
+      Properties:
+        PolicyDocument:
+          Id: MyPolicy
+          Version: '2012-10-17'
+          Statement:
+            - Sid: PublicReadForGetBucketObjects
+              Effect: Allow
+              Principal: '*'
+              Action: 's3:GetObject'
+              Resource: arn:aws:s3:::${self:provider.environment.IMAGES_S3_BUCKET}/*
+        Bucket: !Ref AttachmentsBucket
+
+    # 4) Configure S3 attachment: 
+    AttachmentsBucket:
+      Type: AWS::S3::Bucket
+      Properties:
+        BucketName: ${self:provider.environment.IMAGES_S3_BUCKET}
+        CorsConfiguration:
+          CorsRules:
+            - AllowedOrigins:
+                - '*'
+              AllowedHeaders:
+                - '*'
+              AllowedMethods:
+                - GET
+                - PUT
+                - POST
+                - DELETE
+                - HEAD
+              MaxAge: 3000
+    # 1) Validator Request Body: 
     RequestBodyValidator:
       Type: AWS::ApiGateway::RequestValidator
       Properties: 
@@ -171,7 +225,7 @@ resources:
         ValidateRequestBody: true
         ValidateRequestParameters: false
     
-    # Response from 400+ error: 
+    # 2) Response from 400+ error: 
     GatewayResponseDefault4XX:
       Type: AWS::ApiGateway::GatewayResponse
       Properties:
@@ -183,7 +237,7 @@ resources:
         RestApiId:
           Ref: ApiGatewayRestApi
 
-    # Images DynamoDB Table: 
+    # 3) Images DynamoDB Table: 
     ImagesDynamoDBTable: 
       Type: AWS::DynamoDB::Table 
       Properties: 

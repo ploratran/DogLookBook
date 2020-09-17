@@ -18,6 +18,10 @@ export class AccessLayer {
         // define name of tables used
         private readonly imagesTable = process.env.IMAGES_TABLE, 
         private readonly indexTable = process.env.IMAGE_INDEX, 
+        // initialize AWS S3:
+        private readonly s3 = new XAWS.S3({ signatureVersion: 'v4' }),
+        private readonly s3Bucket = process.env.IMAGES_S3_BUCKET,
+        // private readonly urlExpiration = process.env.SIGNED_URL_EXPIRATION,
     ) {}
 
     // GET images based on userId
@@ -43,15 +47,21 @@ export class AccessLayer {
     // insert new image into Images Table
     // return as a single ImageItem
     async createImage(image: ImageItem): Promise<ImageItem> {
-        logger.info(`Save new ${image.description} into ${this.imagesTable}`); 
+        logger.info(`Save new ${image.description} into ${this.imagesTable}`);
+        
+        // pass in s3 upload URL into new item:
+        const newImage = {
+            ...image,
+            imageUrl: `https://${this.s3Bucket}.s3.amazonaws.com/${image.imageId}`,
+        }
 
         // insert newly created image into base table
         await this.docClient.put({
             TableName: this.imagesTable, 
-            Item: image, 
+            Item: newImage, 
         }).promise(); 
 
-        return image as ImageItem; 
+        return newImage as ImageItem; 
     }
 
     // UPDATE image item based on userId and imageId: 
@@ -87,6 +97,17 @@ export class AccessLayer {
                 imageId, 
             }
         }).promise(); 
+    }
+
+    // generate S3 pre-signed upload url based on imageId: 
+    async generateUploadUrl(imageId: string): Promise<string> {
+        logger.info(`Generating upload url: `);
+
+        return this.s3.getSignedUrl('putObject', {
+            Bucket: this.s3Bucket,
+            Key: imageId, 
+            Expires: 300, // typecast expired time as number
+        })
     }
 }
 
