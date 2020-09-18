@@ -8,9 +8,9 @@ interface ImageCardProps {
 
 const ImageItem = (props: ImageCardProps) => {
     return (
-        <Card>
+        <Card fluid>
             <Card.Content>
-                <Card.Header centered>{props.image.description}</Card.Header>
+                <Card.Header>{props.image.description}</Card.Header>
                 {props.image.imageUrl && (
                     <Image src={props.image.imageUrl} />
                 )}

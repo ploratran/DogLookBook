@@ -5,7 +5,6 @@ import axios from 'axios';
 // GET images based on idToken
 // return an array of images
 export async function getImages(idToken: string): Promise<ImageModel[]> {
-    console.log(`Fetching images from ${idToken}`); 
 
     const response = await axios.get(`${apiEndpoint}/images`, {
         headers: {
@@ -13,6 +12,5 @@ export async function getImages(idToken: string): Promise<ImageModel[]> {
             'Authorization': `Bearer ${idToken}`
         },
     }); 
-    console.log('Images:', response.data)
     return response.data.items
 }

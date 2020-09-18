@@ -13,6 +13,7 @@ interface ImagesListProps {
 
 const ImagesList: React.FC<ImagesListProps> = ({ history, auth }) => {
 
+    // states: 
     const [images, setImages] = React.useState<ImageModel[]>([]); 
 
     const handleUploadImage = () => {
@@ -20,19 +21,16 @@ const ImagesList: React.FC<ImagesListProps> = ({ history, auth }) => {
     }; 
 
     React.useEffect(() => {
+        // call getImages(): 
         async function getAllImages() {
             const images = await getImages(auth.getIdToken()); 
-            console.log(`test: ${Object.values(images[0])}`);
             setImages(images); 
         }
-        
         try {
-    
             getAllImages(); 
         } catch(e) {
             alert(`Failed to fetch images ${e.message}`); 
         }
-        
     }, []); 
 
     return (
