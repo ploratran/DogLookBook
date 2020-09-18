@@ -1,6 +1,6 @@
-export interface ImageModel {
+export default interface ImageModel {
     imageId: string, 
     description: string, 
     createdAt: string, 
-    imageUrl: string, 
+    imageUrl?: string, 
 }

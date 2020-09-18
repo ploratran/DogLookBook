@@ -23,7 +23,7 @@ interface CreateImageState {
     uploadState: UploadState, 
 }
 
-const CreateImage = (props: CreateImageProps) => {
+const EditImage = (props: CreateImageProps) => {
 
     // define initial value of states: 
     const [title, setTitle] = React.useState<CreateImageState["title"]>(''); 
@@ -95,7 +95,7 @@ const CreateImage = (props: CreateImageProps) => {
 
             <Form onSubmit={() => handleSubmit}>
                 <Form.Field>
-                    <label>Title</label>
+                    <label>Description</label>
                     <input 
                         placeholder="Image Title"
                         value={title}
@@ -117,4 +117,4 @@ const CreateImage = (props: CreateImageProps) => {
     ); 
 }; 
 
-export default CreateImage; 
+export default EditImage; 

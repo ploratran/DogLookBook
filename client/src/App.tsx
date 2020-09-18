@@ -2,33 +2,36 @@ import * as React from 'react';
 import { Router, Route, Switch, Link } from 'react-router-dom'; 
 import { Grid, Menu, Segment } from 'semantic-ui-react'; 
 import Auth from './auth/Auth'; 
+import { History } from 'history'; 
 import NotFound from './components/NotFound'; 
-import CreateImage from './components/CreateImage'; 
+import EditImage from './components/EditImage'; 
 import ImagesList from './components/ImagesList';
 
-export interface AppProps {
+interface AppProps {
   auth: Auth, 
-  history: any, 
+  history: History, 
 }
 
-const App = (props: AppProps) => {
+const App: React.FC<AppProps> = ({ auth, history }) => {
 
   const handleLogin = () => {
-    props.auth.login(); 
+    auth.login(); 
   }; 
 
   const handleLogout = () => {
-    props.auth.logout(); 
+    auth.logout(); 
   };  
 
   const logInLogOutButton = () => {
-    if (props.auth.isAuthenticated()) {
+    if (auth.isAuthenticated()) {
+      // when authenticated, able to logout
       return (
         <Menu.Item name='logout' onClick={handleLogout}>
           Log Out
         </Menu.Item>
       )
     } else {
+      // when not authenticated, able to login
       return (
         <Menu.Item name='login' onClick={handleLogin}>
           Log In
@@ -57,24 +60,22 @@ const App = (props: AppProps) => {
 
     return (
       <Switch>
-        {/* Route to Create Image */}
         <Route 
-          path="/images/create" 
+          path="/"
           exact
           render={props => {
-            return <CreateImage {...props}  />
+            return <ImagesList {...props} auth={auth}/>
           }}
         />
 
-        {/* Route to display images */}
-        <Route path="/" exact component={ImagesList} />
-        {/* <Route 
-          path="/images"
+        {/* Route to Create/Update Image based on imageId */}
+        <Route 
+          path="/images/:imageId/edit" 
           exact
           render={props => {
-            return <ImagesList  {...props} />
+            return <EditImage {...props} />
           }}
-        /> */}
+        />
 
         {/* Route to display Not Found */}
         <Route component={NotFound}/>
@@ -88,7 +89,7 @@ const App = (props: AppProps) => {
         <Grid container stackable verticalAlign='middle'>
           <Grid.Row>
             <Grid.Column width={16}>
-              <Router history={props.history}>
+              <Router history={history}>
                 {generateMenu()}
 
                 {generateCurrentPage()}

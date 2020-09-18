@@ -30,7 +30,7 @@ export const makeAuthRouting = () => {
                     path='/callback'
                     render={props => {
                         handleAuthentication(props)
-                        return <CallBack/>
+                        return <CallBack />
                     }}
                 />
                 <Route

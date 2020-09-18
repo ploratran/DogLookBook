@@ -1,8 +1,11 @@
 import React from 'react'; 
+import { Dimmer, Loader } from 'semantic-ui-react'; 
 
 const CallBack = () => {
     return (
-        <h1>Callback</h1>
+        <Dimmer active>
+            <Loader content='Loading'/>
+        </Dimmer>
     )
 }
 
