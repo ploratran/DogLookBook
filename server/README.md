@@ -19,14 +19,14 @@
 ### DynamoDB Table Schema: 
 
 | PK            | SK            | attributes
-| ------------- | :-----------: | ----------- |
+| ------------- | :-----------: | -------------------------------- |
 | `userId`      | `imageId`     | createdAt, imageUrl, description |
 
 #### **Global Index Table Schema:**
 
 
 | PK            | SK            | attributes
-| ------------- | :-----------: | ----------- |
+| ------------- | :-----------: | ------------------------------ |
 |   `userId`    | `createdAt`   | imageId, imageUrl, description |
 
 ### Models: 
@@ -71,7 +71,7 @@ Field(s) required when make a request to update an image:
 ├── tsconfig.json
 ├── webpack.config.js
 ├── README.md
-├── model-validator (JSON Schema)
+├── req-validator (JSON Schema)
     ├── create-post-request.json
     ├── update-post-request.json
 ├── src 
@@ -91,14 +91,15 @@ Field(s) required when make a request to update an image:
             ├── generateUpload.ts
             ├── getImages.ts
             ├── updateImage.ts
-    ├── model-interfaces
-        ├── ImageModel.ts
+    ├── model-interface
+        ├── ImageItem.ts
         ├── ImageUpdate.ts
     ├── request-interfaces
         ├── CreateImageRequest.ts
         ├── UpdateImageRequest.ts
     ├── utils
-        ├── getUserId.ts
-        ├── parseUserId.ts
+        ├── getAuthorization.ts
         ├── logger.ts
+        ├── parseUserId.ts
+        
 ``` 
