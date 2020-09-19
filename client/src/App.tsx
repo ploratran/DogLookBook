@@ -1,6 +1,6 @@
 import * as React from 'react'; 
 import { Router, Route, Switch, Link } from 'react-router-dom'; 
-import { Grid, Menu, Segment } from 'semantic-ui-react'; 
+import { Grid, Menu, Segment, Header } from 'semantic-ui-react'; 
 import Auth from './auth/Auth'; 
 import { History } from 'history'; 
 import NotFound from './components/NotFound'; 
@@ -91,6 +91,9 @@ const App: React.FC<AppProps> = ({ auth, history }) => {
           <Grid.Row>
             <Grid.Column width={16}>
               <Router history={history}>
+                <Header as="h2" textAlign="center" color="blue">
+                  Please sign in with Google Account to use Dogram
+                </Header>
                 {generateMenu()}
 
                 {generateCurrentPage()}
