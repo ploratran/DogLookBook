@@ -16,6 +16,7 @@ const ImagesList: React.FC<ImagesListProps> = ({ history, auth }) => {
     // states: 
     const [images, setImages] = React.useState<ImageModel[]>([]); 
 
+    // Go to Upload New Image page on click event:
     const handleUploadImage = () => {
         history.push(`/images/:imageId/edit`); 
     }; 
@@ -35,6 +36,7 @@ const ImagesList: React.FC<ImagesListProps> = ({ history, auth }) => {
 
     return (
         <div>
+            {/* Button to Upload New Image */}
             <Button
                 primary
                 size='huge'
@@ -46,7 +48,8 @@ const ImagesList: React.FC<ImagesListProps> = ({ history, auth }) => {
 
             <Divider clearing />
 
-            <Card.Group>
+            {/* Display Images */}
+            <Card.Group itemsPerRow={1}>
                 {images.map(image => {
                     return <ImageItem key={image.imageId} image={image} />
                 })}

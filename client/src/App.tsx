@@ -58,7 +58,6 @@ const App: React.FC<AppProps> = ({ auth, history }) => {
 
   // define route for each component: 
   const generateCurrentPage = () => {
-
     return (
       <Switch>
         <Route 

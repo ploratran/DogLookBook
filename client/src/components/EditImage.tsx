@@ -1,5 +1,6 @@
 import * as React from 'react'; 
 import { Form, Button } from 'semantic-ui-react';
+import { getUploadUrl, uploadFile } from '../api/images-api';
 import Auth from '../auth/Auth'; 
 
 enum UploadState {
@@ -26,14 +27,13 @@ interface EditImageState {
 const EditImage: React.FC<EditImageProps> = (props) => {
 
     // define initial value of states: 
-    const [description, setDescription] = React.useState<EditImageState["description"]>(''); 
-    const [file, setFile] = React.useState<EditImageState["file"]>(undefined); 
+    const [description, setDescription] = React.useState<EditImageState['description']>(''); 
+    const [file, setFile] = React.useState<EditImageState['file']>(undefined); 
     // UploadState initially has no upload: 
-    const [uploadState, setUploadState] = React.useState<EditImageState["uploadState"]>(UploadState.NoUpload); 
+    const [uploadState, setUploadState] = React.useState<EditImageState['uploadState']>(UploadState.NoUpload); 
 
     // handle input change of description: 
     const handleDescriptionChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        console.log(e.target.value); 
         setDescription(e.target.value); 
     }; 
 
@@ -43,7 +43,6 @@ const EditImage: React.FC<EditImageProps> = (props) => {
 
         if (!files) { return; }
 
-        console.log('File change ', file); 
         setFile(files[0]); 
     }; 
 
@@ -57,28 +56,33 @@ const EditImage: React.FC<EditImageProps> = (props) => {
             }
 
             // set UploadState when fetch S3 pre-signed url:
-            setUploadState(UploadState.FetchingPresignedUrl); 
+            // get S3 Pre-signed URL: 
+            setUploadState(UploadState.FetchingPresignedUrl);
+            const uploadUrl =  await getUploadUrl(props.auth.getIdToken(), props.match.params.imageId);
 
-            console.log('Created image'); 
-
+            // update UploadState to UploadingFile: 
+            // upload file to S3 bucket via Presigned-URL:
             setUploadState(UploadState.UploadingFile); 
+            await uploadFile(uploadUrl, file); 
 
-            console.log('Image was uploaded!'); 
+            alert('File was uploaded!'); 
         } catch(e) {
             alert('Could not upload an image: ' + e.message); 
         } finally {
+            // reset UploadState to NoUpload: 
             setUploadState(UploadState.NoUpload); 
         }
     }
+
 
     const renderButton = () => {
         return (
             <div>
                 {uploadState === UploadState.FetchingPresignedUrl 
-                    && <p>Uploading image metadata</p>
+                    && (<p>Uploading image metadata</p>)
                 }
                 {uploadState === UploadState.UploadingFile
-                    && <p>Uploading file</p>
+                    && (<p>Uploading file</p>)
                 }
                 <Button
                     loading={uploadState !== UploadState.NoUpload}
@@ -94,13 +98,13 @@ const EditImage: React.FC<EditImageProps> = (props) => {
         <div>
             <h1>Upload New Image</h1>
 
-            <Form onSubmit={() => handleSubmit}>
+            <Form onSubmit={handleSubmit}>
                 <Form.Field>
                     <label>Description</label>
                     <input 
                         placeholder="Image Description"
                         value={description}
-                        onChange={() => handleDescriptionChange}
+                        onChange={handleDescriptionChange}
                     />
                 </Form.Field>
                 <Form.Field>
@@ -109,10 +113,11 @@ const EditImage: React.FC<EditImageProps> = (props) => {
                         type="file"
                         accept="image/*"
                         placeholder="Image to upload"
-                        onChange={() => handleFileChange}
+                        onChange={handleFileChange}
                     />
                 </Form.Field>
-                {renderButton}
+                <Button>Upload</Button>
+                {/* {renderButton} */}
             </Form>
         </div>
     ); 

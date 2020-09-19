@@ -1,23 +1,33 @@
 import * as React from 'react'; 
-import { Card, Image, Icon, Divider } from 'semantic-ui-react'; 
+import { Card, Image, Icon, Divider, Button } from 'semantic-ui-react'; 
 import ImageModel from '../type-interfaces/ImageModel'; 
 
 interface ImageCardProps {
     image: ImageModel, 
 }; 
 
-const ImageItem = (props: ImageCardProps) => {
+const ImageItem: React.FC<ImageCardProps> = ({ image }) => {
     return (
         <Card fluid>
             <Card.Content>
-                <Icon name='user circle outline' /> 
-                <Card.Meta>{props.image.userId}</Card.Meta>
-                {props.image.imageUrl && (
-                    <Image src={props.image.imageUrl} />
+                <Icon floated="left" name='user circle outline' /> 
+                <Card.Meta>{image.userId?.substring(14)}</Card.Meta>
+                {image.imageUrl && (
+                    <Image src={image.imageUrl} />
                 )}
-            <Divider fluid="strue" clearing />
-            <Card.Header>{props.image.description}</Card.Header>
-            <Icon name='history'/>{props.image.createdAt}
+                <Divider fluid="strue" clearing />
+                <Card.Header>{image.description}</Card.Header>
+                <Icon name='history'/>{image.createdAt}
+            </Card.Content>
+            <Card.Content extra>
+                <div>
+                    <Button basic color="blue">
+                        Edit
+                    </Button>
+                    <Button basic color="red">
+                        Delete
+                    </Button>
+                </div>
             </Card.Content>
         </Card>
     )
