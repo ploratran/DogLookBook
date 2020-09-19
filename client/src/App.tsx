@@ -20,6 +20,7 @@ const App: React.FC<AppProps> = ({ auth, history }) => {
 
   const handleLogout = () => {
     auth.logout(); 
+    history.push(`/`); 
   };  
 
   const logInLogOutButton = () => {
@@ -73,7 +74,7 @@ const App: React.FC<AppProps> = ({ auth, history }) => {
           path="/images/:imageId/edit" 
           exact
           render={props => {
-            return <EditImage {...props} />
+            return <EditImage {...props} auth={auth}/>
           }}
         />
 

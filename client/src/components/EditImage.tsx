@@ -3,38 +3,41 @@ import { Form, Button } from 'semantic-ui-react';
 import Auth from '../auth/Auth'; 
 
 enum UploadState {
-    NoUpload, 
-    UploadingData, 
-    UploadingFile, 
-}
+    NoUpload,
+    FetchingPresignedUrl,
+    UploadingFile,
+}  
 
-interface CreateImageProps {
-    // auth: Auth, 
+interface EditImageProps {
     match: {
         params: {
-            imageId: string, 
+            imageId: string,
         }
-    }
+    },
+    auth: Auth
 }
 
-interface CreateImageState {
-    title: string, 
+interface EditImageState {
+    description: string, 
     file: any, 
     uploadState: UploadState, 
 }
 
-const EditImage = (props: CreateImageProps) => {
+const EditImage: React.FC<EditImageProps> = (props) => {
 
     // define initial value of states: 
-    const [title, setTitle] = React.useState<CreateImageState["title"]>(''); 
-    const [file, setFile] = React.useState<CreateImageState["file"]>(undefined); 
-    const [uploadState, setUploadState] = React.useState<CreateImageState["uploadState"]>(UploadState.NoUpload); 
+    const [description, setDescription] = React.useState<EditImageState["description"]>(''); 
+    const [file, setFile] = React.useState<EditImageState["file"]>(undefined); 
+    // UploadState initially has no upload: 
+    const [uploadState, setUploadState] = React.useState<EditImageState["uploadState"]>(UploadState.NoUpload); 
 
-    // handle input change of "title" and "file": 
-    const handleTitleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        setTitle(e.target.value); 
+    // handle input change of description: 
+    const handleDescriptionChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        console.log(e.target.value); 
+        setDescription(e.target.value); 
     }; 
 
+    // hangle file change:
     const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const files = e.target.files; 
 
@@ -44,9 +47,6 @@ const EditImage = (props: CreateImageProps) => {
         setFile(files[0]); 
     }; 
 
-    // const setUploadState = (uploadState: UploadState) => {}
-
-    // TODO: 
     const handleSubmit = async (e: React.SyntheticEvent) => {
         e.preventDefault(); 
 
@@ -56,8 +56,9 @@ const EditImage = (props: CreateImageProps) => {
                 return; 
             }
 
-            setUploadState(UploadState.UploadingData); 
-            
+            // set UploadState when fetch S3 pre-signed url:
+            setUploadState(UploadState.FetchingPresignedUrl); 
+
             console.log('Created image'); 
 
             setUploadState(UploadState.UploadingFile); 
@@ -73,7 +74,7 @@ const EditImage = (props: CreateImageProps) => {
     const renderButton = () => {
         return (
             <div>
-                {uploadState === UploadState.UploadingData 
+                {uploadState === UploadState.FetchingPresignedUrl 
                     && <p>Uploading image metadata</p>
                 }
                 {uploadState === UploadState.UploadingFile
@@ -97,9 +98,9 @@ const EditImage = (props: CreateImageProps) => {
                 <Form.Field>
                     <label>Description</label>
                     <input 
-                        placeholder="Image Title"
-                        value={title}
-                        onChange={() => handleTitleChange}
+                        placeholder="Image Description"
+                        value={description}
+                        onChange={() => handleDescriptionChange}
                     />
                 </Form.Field>
                 <Form.Field>

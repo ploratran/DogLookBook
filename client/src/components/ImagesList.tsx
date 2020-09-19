@@ -31,7 +31,7 @@ const ImagesList: React.FC<ImagesListProps> = ({ history, auth }) => {
         } catch(e) {
             alert(`Failed to fetch images ${e.message}`); 
         }
-    }, []); 
+    }, [auth]); 
 
     return (
         <div>
