@@ -1,6 +1,6 @@
 import * as React from 'react'; 
 import ImageModel   from '../type-interfaces/ImageModel'; 
-import { Card, Divider, Button } from 'semantic-ui-react'; 
+import { Card, Divider, Button, Grid } from 'semantic-ui-react'; 
 import { History } from 'history'; 
 import ImageItem from './ImageItem';
 import Auth from '../auth/Auth';
@@ -48,12 +48,16 @@ const ImagesList: React.FC<ImagesListProps> = ({ history, auth }) => {
 
             <Divider clearing />
 
+            <Grid centered columns={2}>
+                <Grid.Column>
             {/* Display Images */}
-            <Card.Group itemsPerRow={1}>
-                {images.map(image => {
-                    return <ImageItem key={image.imageId} image={image} />
-                })}
-            </Card.Group>
+                <Card.Group itemsPerRow={1}>
+                    {images.map(image => {
+                        return <ImageItem key={image.imageId} image={image} />
+                    })}
+                </Card.Group>
+                </Grid.Column>
+            </Grid>
         </div>
     )
 }; 

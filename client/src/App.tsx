@@ -86,7 +86,8 @@ const App: React.FC<AppProps> = ({ auth, history }) => {
   return (
     <div>
       <Segment style={{padding: '8em 0em'}} vertical>
-        <Grid container stackable verticalAlign='middle'>
+        {/* <Grid container stackable verticalAlign='middle'> */}
+        <Grid container stackable centered verticalAlign='middle'>
           <Grid.Row>
             <Grid.Column width={16}>
               <Router history={history}>

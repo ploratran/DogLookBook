@@ -1,5 +1,5 @@
 import * as React from 'react'; 
-import { Card, Image, Icon, Divider, Button } from 'semantic-ui-react'; 
+import { Card, Image, Icon, Divider, Button, Label } from 'semantic-ui-react'; 
 import ImageModel from '../type-interfaces/ImageModel'; 
 
 interface ImageCardProps {
@@ -8,14 +8,16 @@ interface ImageCardProps {
 
 const ImageItem: React.FC<ImageCardProps> = ({ image }) => {
     return (
-        <Card fluid>
+        <Card>
             <Card.Content>
-                <Icon floated="left" name='user circle outline' /> 
-                <Card.Meta>{image.userId?.substring(14)}</Card.Meta>
+                <div>
+                    <Image><Icon floated="left" avatar="true" size="large" name='user circle outline' /> </Image>
+                    <span>{image.userId?.substring(14)}</span>
+                </div>
                 {image.imageUrl && (
-                    <Image src={image.imageUrl} />
+                    <Image src={image.imageUrl} size="big" bordered/>
                 )}
-                <Divider fluid="strue" clearing />
+                <Divider clearing />
                 <Card.Header>{image.description}</Card.Header>
                 <Icon name='history'/>{image.createdAt}
             </Card.Content>
