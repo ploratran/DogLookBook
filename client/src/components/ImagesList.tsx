@@ -34,16 +34,16 @@ const ImagesList: React.FC<ImagesListProps> = ({ history, auth }) => {
         }
     }, [auth]); 
 
-    const handleRemove = (id: string) => {
-        const newList = images.filter((image) => image.imageId !== id);
-        setImages(newList);  
+    const setNewImageList = (id: string) => {
+        const newImages = images.filter((image) => image.imageId !== id);
+        setImages(newImages);  
     }
 
     // DELETE 1 image:
-    const handleDeleteImage = async (imageId: string) => {
+    async function handleDeleteImage(imageId: string) {
         try {
             await deleteImage(auth.getIdToken(), imageId);
-            handleRemove(imageId)
+            setNewImageList(imageId)
         } catch (e) {
             alert(`Failed to delete image ${e.message}`); 
         }
@@ -89,16 +89,12 @@ const ImagesList: React.FC<ImagesListProps> = ({ history, auth }) => {
                                         <Button 
                                             basic 
                                             color="blue"
-                                        >
-                                            Edit
-                                        </Button>
+                                        > Edit </Button>
                                         <Button 
                                             basic 
                                             color="red"
                                             onClick={() => handleDeleteImage(image.imageId)}
-                                        >
-                                            Delete
-                                        </Button>
+                                        > Delete </Button>
                                     </div>
                                 </Card.Content>
                             </Card>

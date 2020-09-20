@@ -21,7 +21,6 @@ export async function deleteImage(idToken: string, imageId: string): Promise<voi
         headers: {
             'Content-Type': 'application/json',
             'Authorization': `Bearer ${idToken}`,
-            'Access-Control-Allow-Origin': '*'
         }
     });
 }
