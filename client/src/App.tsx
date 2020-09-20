@@ -4,7 +4,7 @@ import { Grid, Menu, Segment, Header } from 'semantic-ui-react';
 import Auth from './auth/Auth'; 
 import { History } from 'history'; 
 import NotFound from './components/NotFound'; 
-import EditImage from './components/EditImage'; 
+import CreateImage from './components/CreateImage'; 
 import ImagesList from './components/ImagesList';
 
 interface AppProps {
@@ -70,10 +70,10 @@ const App: React.FC<AppProps> = ({ auth, history }) => {
 
         {/* Route to Create/Update Image based on imageId */}
         <Route 
-          path="/images/:imageId/edit" 
+          path="/images/create" 
           exact
           render={props => {
-            return <EditImage {...props} auth={auth}/>
+            return <CreateImage {...props} auth={auth}/>
           }}
         />
 

@@ -9,7 +9,7 @@ enum UploadState {
     UploadingFile,
 }  
 
-interface EditImageProps {
+interface CreateImageProps {
     match: {
         params: {
             imageId: string,
@@ -18,19 +18,19 @@ interface EditImageProps {
     auth: Auth
 }
 
-interface EditImageState {
+interface CreateImageState {
     description: string, 
     file: any, 
     uploadState: UploadState, 
 }
 
-const EditImage: React.FC<EditImageProps> = (props) => {
+const CreateImage: React.FC<CreateImageProps> = (props) => {
 
     // define initial value of states: 
-    const [description, setDescription] = React.useState<EditImageState['description']>(''); 
-    const [file, setFile] = React.useState<EditImageState['file']>(undefined); 
+    const [description, setDescription] = React.useState<CreateImageState['description']>(''); 
+    const [file, setFile] = React.useState<CreateImageState['file']>(undefined); 
     // UploadState initially has no upload: 
-    const [uploadState, setUploadState] = React.useState<EditImageState['uploadState']>(UploadState.NoUpload); 
+    const [uploadState, setUploadState] = React.useState<CreateImageState['uploadState']>(UploadState.NoUpload); 
 
     // handle input change of description: 
     const handleDescriptionChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -123,4 +123,4 @@ const EditImage: React.FC<EditImageProps> = (props) => {
     ); 
 }; 
 
-export default EditImage; 
+export default CreateImage; 
