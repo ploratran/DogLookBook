@@ -31,6 +31,7 @@ export async function createImage(
     idToken: string, 
     newImage: CreateImageRequest
 ): Promise<ImageModel> {
+
     const response = await axios.post(`${apiEndpoint}/images`, JSON.stringify(newImage), {
         headers: {
             'Content-Type': 'application/json', 

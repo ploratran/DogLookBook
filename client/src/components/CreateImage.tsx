@@ -11,11 +11,11 @@ enum UploadState {
 }  
 
 interface CreateImageProps {
-    match: {
-        params: {
-            imageId: string,
-        }
-    },
+    // match: {
+    //     params: {
+    //         imageId: string,
+    //     }
+    // },
     auth: Auth
 }
 
@@ -54,6 +54,11 @@ const CreateImage: React.FC<CreateImageProps> = (props) => {
                 return; 
             }
 
+            if (description === '' || !description) {
+                alert('Description needed');
+                return; 
+            }
+
             // set UpdateState to Uploading Data: 
             setUploadState(UploadState.UploadingData); 
             // create new image with new 'description': 
@@ -66,7 +71,7 @@ const CreateImage: React.FC<CreateImageProps> = (props) => {
             // set UpdateState to Fetching Presigned Url: 
             setUploadState(UploadState.FetchingPresignedUrl);
             // get S3 presigned url using getUploadUrl(): 
-            const uploadUrl =  await getUploadUrl(props.auth.getIdToken(), props.match.params.imageId);
+            const uploadUrl =  await getUploadUrl(props.auth.getIdToken(), uploadInfo.imageId);
 
             // set UploadState to UploadingFile: 
             setUploadState(UploadState.UploadingFile); 
