@@ -34,6 +34,7 @@ Each Image item has the following fields:
         ├── Auth.js
     ├── components
         ├── Callback.tsx
+        ├── CreateImage.tsx
         ├── EditImage.tsx
         ├── ImageItem.tsx
         ├── ImageList.tsx

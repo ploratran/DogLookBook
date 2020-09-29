@@ -1,6 +1,6 @@
 import * as React from 'react'; 
 import ImageModel   from '../type-interfaces/ImageModel'; 
-import { Card, Divider, Button, Grid, Image, Icon, Confirm } from 'semantic-ui-react'; 
+import { Card, Divider, Button, Grid, Image, Icon } from 'semantic-ui-react'; 
 import { History } from 'history'; 
 // import ImageItem from './ImageItem';
 import Auth from '../auth/Auth';
@@ -13,19 +13,17 @@ interface ImagesListProps {
 
 const ImagesList: React.FC<ImagesListProps> = ({ history, auth }) => {
 
-    // states: 
+    // all states: 
     const [images, setImages] = React.useState<ImageModel[]>([]); 
-    // state to confirm delete: 
-    const [open, setOpen] = React.useState(false); 
 
     // Go to Upload New Image page on click event:
-    const handleUploadImage = () => {
+    const handleCreateImage = () => {
         history.push(`/images/create`); 
     }; 
 
     // GET all images in homepage: 
     React.useEffect(() => {
-        // call getImages(): 
+        // use async/await to display all images using getImages(): 
         async function getAllImages() {
             const images = await getImages(auth.getIdToken()); 
             setImages(images); 
@@ -37,35 +35,23 @@ const ImagesList: React.FC<ImagesListProps> = ({ history, auth }) => {
         }
     }, [auth]); 
 
+    // set state of images to images not being deleted: 
     const setNewImageList = (imageId: string) => {
         const newImages = images.filter((image) => image.imageId !== imageId);
         setImages(newImages);  
     }
 
-    // DELETE 1 image:
+    // DELETE image:
     async function handleDeleteImage(imageId: string) {
-        // call deleteImage(): 
         try {
             console.log(`Deleting image: ${imageId}`);
             alert(`Image deleted!`);
-            await deleteImage(auth.getIdToken(), imageId);
-            // setOpen(false);
-            setNewImageList(imageId);
-            history.push(`/`);
+            await deleteImage(auth.getIdToken(), imageId);  // call deleteImage(): 
+            setNewImageList(imageId); 
         } catch (e) {
             alert(`Failed to delete image ${e.message}`); 
         }
     }
-
-    // // Show Delete confirmation window:
-    // const show = () => {
-    //     setOpen(true);
-    // }
-
-    // // handle Cancel when user denies to Delete an image:
-    // const handleCancel = () => {
-    //     setOpen(false); 
-    // }
 
     return (
         <div>
@@ -74,7 +60,7 @@ const ImagesList: React.FC<ImagesListProps> = ({ history, auth }) => {
                 primary
                 size='huge'
                 className='add-button'
-                onClick={handleUploadImage}
+                onClick={handleCreateImage}
             >
                 Upload New Image 
             </Button>
@@ -113,15 +99,6 @@ const ImagesList: React.FC<ImagesListProps> = ({ history, auth }) => {
                                             color="red"
                                             onClick={() => handleDeleteImage(image.imageId)}
                                         > Delete </Button>
-                                        {/* <Button basic color="red" onClick={show}>Delete</Button>
-                                        <Confirm
-                                            open={open}
-                                            content="Are you sure to delete?"
-                                            cancelButton="Cancel"
-                                            confirmButton="Yes, delete"
-                                            onCancel={handleCancel}
-                                            onConfirm={() => handleDeleteImage(image.imageId)}
-                                        /> */}
                                     </div>
                                 </Card.Content>
                             </Card>

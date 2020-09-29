@@ -68,7 +68,7 @@ const App: React.FC<AppProps> = ({ auth, history }) => {
           }}
         />
 
-        {/* Route to Create/Update Image based on imageId */}
+        {/* Route to Create new image based on imageId */}
         <Route 
           path="/images/create" 
           exact
@@ -76,6 +76,8 @@ const App: React.FC<AppProps> = ({ auth, history }) => {
             return <CreateImage {...props} auth={auth}/>
           }}
         />
+
+        {/* Route to Update an image based on imageId */}
 
         {/* Route to display Not Found */}
         <Route component={NotFound}/>

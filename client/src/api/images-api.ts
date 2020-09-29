@@ -25,9 +25,28 @@ export async function deleteImage(idToken: string, imageId: string): Promise<voi
     });
 }
 
+// POST to create new image
+// return the newly created image: 
+export async function createImage(
+    idToken: string, 
+    newImage: CreateImageRequest
+): Promise<ImageModel> {
+    const response = await axios.post(`${apiEndpoint}/images`, JSON.stringify(newImage), {
+        headers: {
+            'Content-Type': 'application/json', 
+            'Authorization': `Bearer ${idToken}`,
+        }
+    });
+    // return the newly created image as a single ImageModel: 
+    return response.data.item; 
+}
+
 // GET S3 Presigned-URL: 
 // return S3 presigned-url as string: 
-export async function getUploadUrl(idToken: string, imageId: string): Promise<string> {
+export async function getUploadUrl(
+    idToken: string, 
+    imageId: string
+): Promise<string> {
     const response = await axios.post(`${apiEndpoint}/images/s3/${imageId}`, '', {
         headers: {
             'Content-Type': 'application/json',
@@ -43,15 +62,3 @@ export async function uploadFile(uploadUrl: string, file: Buffer): Promise<void>
     await axios.put(uploadUrl, file); 
 }
 
-// POST to create new image
-// return the newly created image: 
-export async function createImage(idToken: string, newImage: CreateImageRequest): Promise<ImageModel> {
-    const response = await axios.post(`${apiEndpoint}/images`, JSON.stringify(newImage), {
-        headers: {
-            'Content-Type': 'application/json', 
-            'Authorization': `Bearer ${idToken}`,
-        }
-    });
-    // return the newly created image as a single ImageModel: 
-    return response.data.item; 
-}

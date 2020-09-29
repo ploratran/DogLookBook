@@ -1,10 +1,11 @@
 import * as React from 'react'; 
 import { Form, Button } from 'semantic-ui-react';
-import { getUploadUrl, uploadFile } from '../api/images-api';
+import { createImage, getUploadUrl, uploadFile } from '../api/images-api';
 import Auth from '../auth/Auth'; 
 
 enum UploadState {
     NoUpload,
+    UploadingData,
     FetchingPresignedUrl,
     UploadingFile,
 }  
@@ -26,10 +27,8 @@ interface CreateImageState {
 
 const CreateImage: React.FC<CreateImageProps> = (props) => {
 
-    // define initial value of states: 
     const [description, setDescription] = React.useState<CreateImageState['description']>(''); 
     const [file, setFile] = React.useState<CreateImageState['file']>(undefined); 
-    // UploadState initially has no upload: 
     const [uploadState, setUploadState] = React.useState<CreateImageState['uploadState']>(UploadState.NoUpload); 
 
     // handle input change of description: 
@@ -55,14 +54,23 @@ const CreateImage: React.FC<CreateImageProps> = (props) => {
                 return; 
             }
 
-            // set UploadState when fetch S3 pre-signed url:
-            // get S3 Pre-signed URL: 
+            // set UpdateState to Uploading Data: 
+            setUploadState(UploadState.UploadingData); 
+            // create new image with new 'description': 
+            const uploadInfo = await createImage(props.auth.getIdToken(), {
+                description: description,
+            })
+
+            console.log(`Create image: ${uploadInfo}`); 
+
+            // set UpdateState to Fetching Presigned Url: 
             setUploadState(UploadState.FetchingPresignedUrl);
+            // get S3 presigned url using getUploadUrl(): 
             const uploadUrl =  await getUploadUrl(props.auth.getIdToken(), props.match.params.imageId);
 
-            // update UploadState to UploadingFile: 
-            // upload file to S3 bucket via Presigned-URL:
+            // set UploadState to UploadingFile: 
             setUploadState(UploadState.UploadingFile); 
+            // upload file to S3 bucket using Presigned-URL:
             await uploadFile(uploadUrl, file); 
 
             alert('File was uploaded!'); 
@@ -78,11 +86,14 @@ const CreateImage: React.FC<CreateImageProps> = (props) => {
     const renderButton = () => {
         return (
             <div>
+                {uploadState === UploadState.UploadingData
+                    && <p>Upload new description</p>
+                }
                 {uploadState === UploadState.FetchingPresignedUrl 
-                    && (<p>Uploading image metadata</p>)
+                    && <p>Uploading image metadata</p>
                 }
                 {uploadState === UploadState.UploadingFile
-                    && (<p>Uploading file</p>)
+                    && <p>Uploading file</p>
                 }
                 <Button
                     loading={uploadState !== UploadState.NoUpload}
@@ -116,8 +127,7 @@ const CreateImage: React.FC<CreateImageProps> = (props) => {
                         onChange={handleFileChange}
                     />
                 </Form.Field>
-                <Button>Upload</Button>
-                {/* {renderButton} */}
+                {renderButton()}
             </Form>
         </div>
     ); 
