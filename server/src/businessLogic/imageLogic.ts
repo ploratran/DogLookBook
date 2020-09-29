@@ -25,8 +25,8 @@ export async function getAllImages(jwtToken: string): Promise<ImageItem[]> {
 // create new image with corresponding userId 
 // return the newly created ImageItem
 export async function createImage(
-    newImage: CreateImageRequest, 
-    jwtToken: string
+    jwtToken: string,
+    newImage: CreateImageRequest
 ): Promise<ImageItem> {
 
     logger.info(`Insert new image`); 
@@ -44,7 +44,7 @@ export async function createImage(
         userId, 
         imageId, 
         createdAt: currentTime, 
-        ...newImage, // description, imageUrl
+        ...newImage, // description
     }) as ImageItem;  
 }
 

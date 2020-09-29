@@ -22,8 +22,7 @@ export const handler: APIGatewayProxyHandler = async (event: APIGatewayProxyEven
             'Access-Control-Allow-Credentials': true
         },
         body: JSON.stringify({ 
-            imageUrl: event.pathParameters.imageUrl,
-            uploadUrl 
-        }), // get URL as string
+            uploadUrl, // get URL as string
+        })
     }
 }

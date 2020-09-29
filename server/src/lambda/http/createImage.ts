@@ -9,12 +9,11 @@ const logger = createLogger('Create Image');
 
 export const handler: APIGatewayProxyHandler = async (event: APIGatewayProxyEvent): Promise<APIGatewayProxyResult> => {
 
-    const newImage: CreateImageRequest = JSON.parse(event.body); 
+    const newImage: CreateImageRequest = JSON.parse(event.body); // parse 'description' from event body
 
-    // const jwtToken = event.headers.Authorization.split(' ')[1]; 
     const jwtToken = getAuthorization(event); 
 
-    const newItem = await createImage(newImage, jwtToken); 
+    const newItem = await createImage(jwtToken, newImage); 
 
     logger.info(`New Image ${Object.values(newItem)}`);  
 

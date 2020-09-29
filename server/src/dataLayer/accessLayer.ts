@@ -21,7 +21,7 @@ export class AccessLayer {
         // initialize AWS S3:
         private readonly s3 = new XAWS.S3({ signatureVersion: 'v4' }),
         private readonly s3Bucket = process.env.IMAGES_S3_BUCKET,
-        // private readonly urlExpiration = process.env.SIGNED_URL_EXPIRATION,
+        private readonly urlExpiration = process.env.SIGNED_URL_EXPIRATION,
     ) {}
 
     // GET images based on userId
@@ -49,10 +49,10 @@ export class AccessLayer {
     async createImage(image: ImageItem): Promise<ImageItem> {
         logger.info(`Save new ${image.description} into ${this.imagesTable}`);
         
-        // pass in s3 upload URL into new item:
+       
         const newImage = {
             ...image,
-            imageUrl: `https://${this.s3Bucket}.s3.amazonaws.com/${image.imageId}`,
+            imageUrl: `https://${this.s3Bucket}.s3.amazonaws.com/${image.imageId}`,  // pass in s3 upload URL into new item
         }
 
         // insert newly created image into base table
@@ -106,7 +106,7 @@ export class AccessLayer {
         return this.s3.getSignedUrl('putObject', {
             Bucket: this.s3Bucket,
             Key: imageId, 
-            Expires: 300, // typecast expired time as number
+            Expires: +this.urlExpiration, // typecast expired time as number
         })
     }
 }
