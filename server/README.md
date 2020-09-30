@@ -18,14 +18,14 @@
 
 ### DynamoDB Table Schema: 
 
-| PK            | SK            | attributes
+| Partition Key | Sort Key      | attributes
 | ------------- | :-----------: | -------------------------------- |
 | `userId`      | `imageId`     | createdAt, imageUrl, description |
 
 #### **Global Index Table Schema:**
 
 
-| PK            | SK            | attributes
+| Partition Key | Sort Key      | attributes
 | ------------- | :-----------: | ------------------------------ |
 |   `userId`    | `createdAt`   | imageId, imageUrl, description |
 
@@ -72,8 +72,8 @@ Field(s) required when make a request to update an image:
 ├── webpack.config.js
 ├── README.md
 ├── req-validator (JSON Schema)
-    ├── create-post-request.json
-    ├── update-post-request.json
+    ├── create-image-request.json
+    ├── update-image-request.json
 ├── src 
     ├── auth
         ├── Jwt.ts
