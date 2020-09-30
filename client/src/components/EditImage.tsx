@@ -28,20 +28,11 @@ interface EditImageState {
 const EditImage: React.FC<EditImageProps> = (props) => {
 
     const [description, setDescription] = React.useState<EditImageState['description']>('');
-    const [file, setFile] = React.useState<EditImageState['file']>(undefined);
     const [uploadState, setUploadState] = React.useState<EditImageState['uploadState']>(UploadState.NoUpload); 
 
     const handleDescriptionChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setDescription(e.target.value); 
     };
-
-    const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        const files = e.target.files;
-
-        if (!files) { return; }
-
-        setFile(files[0]);
-    }; 
 
     const handleSubmit = async (e: React.SyntheticEvent) => {
         e.preventDefault(); 
