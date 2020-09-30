@@ -18,7 +18,6 @@ export const handler: APIGatewayProxyHandler = async (event: APIGatewayProxyEven
     const updatedImage: UpdateImageRequest = JSON.parse(event.body); 
 
     // validate user
-    // const userId = event.headers.Authorization.split(' ')[1]; 
     const userId = getAuthorization(event); 
 
     // update image item: 
