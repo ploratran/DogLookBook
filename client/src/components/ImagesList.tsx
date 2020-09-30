@@ -21,6 +21,11 @@ const ImagesList: React.FC<ImagesListProps> = ({ history, auth }) => {
         history.push(`/images/create`); 
     }; 
 
+    // Go to Edit Image page on click event: 
+    const onEditButtonClick = (imageId: string) => {
+        history.push(`/images/${imageId}`);
+    }
+
     // GET all images in homepage: 
     React.useEffect(() => {
         // use async/await to display all images using getImages(): 
@@ -44,9 +49,8 @@ const ImagesList: React.FC<ImagesListProps> = ({ history, auth }) => {
     // DELETE image:
     async function handleDeleteImage(imageId: string) {
         try {
-            console.log(`Deleting image: ${imageId}`);
+            await deleteImage(auth.getIdToken(), imageId);  // call deleteImage():
             alert(`Image deleted!`);
-            await deleteImage(auth.getIdToken(), imageId);  // call deleteImage(): 
             setNewImageList(imageId); 
         } catch (e) {
             alert(`Failed to delete image ${e.message}`); 
@@ -93,6 +97,7 @@ const ImagesList: React.FC<ImagesListProps> = ({ history, auth }) => {
                                         <Button 
                                             basic 
                                             color="blue"
+                                            onClick={() => onEditButtonClick(image.imageId)}
                                         > Edit </Button>
                                         <Button 
                                             basic 

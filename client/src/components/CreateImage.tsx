@@ -2,30 +2,27 @@ import * as React from 'react';
 import { Form, Button } from 'semantic-ui-react';
 import { createImage, getUploadUrl, uploadFile } from '../api/images-api';
 import Auth from '../auth/Auth'; 
+import { History } from 'history'; 
 
 enum UploadState {
     NoUpload,
     UploadingData,
     FetchingPresignedUrl,
-    UploadingFile,
+    UploadingFile
 }  
 
 interface CreateImageProps {
-    // match: {
-    //     params: {
-    //         imageId: string,
-    //     }
-    // },
+    history: History,
     auth: Auth
 }
 
 interface CreateImageState {
     description: string, 
     file: any, 
-    uploadState: UploadState, 
+    uploadState: UploadState
 }
 
-const CreateImage: React.FC<CreateImageProps> = (props) => {
+const CreateImage: React.FC<CreateImageProps> = ({ history, auth }) => {
 
     const [description, setDescription] = React.useState<CreateImageState['description']>(''); 
     const [file, setFile] = React.useState<CreateImageState['file']>(undefined); 
@@ -62,16 +59,14 @@ const CreateImage: React.FC<CreateImageProps> = (props) => {
             // set UpdateState to Uploading Data: 
             setUploadState(UploadState.UploadingData); 
             // create new image with new 'description': 
-            const uploadInfo = await createImage(props.auth.getIdToken(), {
+            const uploadInfo = await createImage(auth.getIdToken(), {
                 description: description,
-            })
-
-            console.log(`Create image: ${uploadInfo}`); 
+            });
 
             // set UpdateState to Fetching Presigned Url: 
             setUploadState(UploadState.FetchingPresignedUrl);
             // get S3 presigned url using getUploadUrl(): 
-            const uploadUrl =  await getUploadUrl(props.auth.getIdToken(), uploadInfo.imageId);
+            const uploadUrl =  await getUploadUrl(auth.getIdToken(), uploadInfo.imageId);
 
             // set UploadState to UploadingFile: 
             setUploadState(UploadState.UploadingFile); 
@@ -79,6 +74,7 @@ const CreateImage: React.FC<CreateImageProps> = (props) => {
             await uploadFile(uploadUrl, file); 
 
             alert('File was uploaded!'); 
+            history.push('/');             
         } catch(e) {
             alert('Could not upload an image: ' + e.message); 
         } finally {

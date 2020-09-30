@@ -6,6 +6,7 @@ import { History } from 'history';
 import NotFound from './components/NotFound'; 
 import CreateImage from './components/CreateImage'; 
 import ImagesList from './components/ImagesList';
+import EditImage from './components/EditImage'; 
 
 interface AppProps {
   auth: Auth, 
@@ -78,6 +79,13 @@ const App: React.FC<AppProps> = ({ auth, history }) => {
         />
 
         {/* Route to Update an image based on imageId */}
+        <Route 
+          path="/images/:imageId"
+          exact
+          render={props => {
+            return <EditImage {...props} auth={auth}/>
+          }}
+        />
 
         {/* Route to display Not Found */}
         <Route component={NotFound}/>

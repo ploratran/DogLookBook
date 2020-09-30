@@ -1,6 +1,7 @@
 import { apiEndpoint } from '../config'; 
 import axios from 'axios'; 
 import CreateImageRequest from '../type-interfaces/CreateImageRequest'; 
+import UpdateImageRequest from '../type-interfaces/UpdateImageRequest'; 
 import ImageModel from '../type-interfaces/ImageModel';
 
 // GET images based on idToken
@@ -63,3 +64,16 @@ export async function uploadFile(uploadUrl: string, file: Buffer): Promise<void>
     await axios.put(uploadUrl, file); 
 }
 
+// PATCH to update image with new metadata based on imageId: 
+export async function updateImage(
+    idToken: string, 
+    imageId: string, 
+    updatedImage: UpdateImageRequest, 
+): Promise<void> {
+    await axios.patch(`${apiEndpoint}/images/${imageId}`, JSON.stringify(updatedImage), {
+        headers: {
+            'Content-Type': 'application/json', 
+            'Authorization': `Bearer ${idToken}`
+        }
+    });
+}
