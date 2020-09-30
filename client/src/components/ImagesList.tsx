@@ -49,8 +49,8 @@ const ImagesList: React.FC<ImagesListProps> = ({ history, auth }) => {
     // DELETE image:
     async function handleDeleteImage(imageId: string) {
         try {
-            await deleteImage(auth.getIdToken(), imageId);  // call deleteImage():
             alert(`Image deleted!`);
+            await deleteImage(auth.getIdToken(), imageId);  // call deleteImage():
             setNewImageList(imageId); 
         } catch (e) {
             alert(`Failed to delete image ${e.message}`); 

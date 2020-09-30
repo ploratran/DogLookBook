@@ -2,13 +2,11 @@ import * as React from 'react';
 import { Form, Button } from 'semantic-ui-react'; 
 import Auth from '../auth/Auth'; 
 import { History } from 'history'; 
-import { updateImage, getUploadUrl, uploadFile } from '../api/images-api'; 
+import { updateImage } from '../api/images-api'; 
 
 enum UploadState {
     NoUpload, 
-    UpdatingData,
-    FetchingPresignedUrl,  
-    UpdatingFile
+    UpdatingData
 }
 
 interface EditImageProps {
@@ -49,8 +47,8 @@ const EditImage: React.FC<EditImageProps> = (props) => {
         e.preventDefault(); 
 
         try {
-            if (!file || description === '' || !description) {
-                alert('Either Description or File should be selected'); 
+            if (description === '' || !description) {
+                alert('Description should be selected'); 
                 return; 
             }
 
@@ -59,13 +57,8 @@ const EditImage: React.FC<EditImageProps> = (props) => {
                 description
             })
 
-            setUploadState(UploadState.FetchingPresignedUrl);
-            const uploadUrl = await getUploadUrl(props.auth.getIdToken(), props.match.params.imageId); 
-
-            setUploadState(UploadState.UpdatingFile);
-            await uploadFile(uploadUrl, file); 
-
             alert('Data updated!');
+            props.history.push('/'); 
 
         } catch (e) {
             alert('Could not update data: ' + e.message); 
@@ -80,12 +73,6 @@ const EditImage: React.FC<EditImageProps> = (props) => {
             <div>
                 {uploadState === UploadState.UpdatingData
                     && <p>Updating new description</p>
-                }
-                {uploadState === UploadState.FetchingPresignedUrl
-                    && <p>Updating new image metadata</p>
-                }
-                {uploadState === UploadState.UpdatingFile
-                    && <p>Updating File</p>
                 }
                 <Button 
                     loading={uploadState !== UploadState.NoUpload}
@@ -108,15 +95,6 @@ const EditImage: React.FC<EditImageProps> = (props) => {
                         placeholder='New Description'
                         value={description}
                         onChange={handleDescriptionChange}
-                    />
-                </Form.Field>
-                <Form.Field>
-                    <label>New Image</label>
-                    <input 
-                        type='file'
-                        accept='image/*'
-                        placeholder='New Image'
-                        onChange={handleFileChange}
                     />
                 </Form.Field>
                 {renderButton()}
