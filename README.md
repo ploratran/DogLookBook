@@ -48,7 +48,7 @@ Each Image item has the following fields:
 ## Capstone Requirements
 1. **Functionalities:** 
 - [x] Application can be able to CREATE, UPDATE, DELETE, POST an item.
-- [ ] User can click on "pencil" button to select and UPLOAD an item. 
+- [x] User can click on "Upload New Image" button to select and UPLOAD an item. 
 - [x] Application can be login/logout and show contents of the current user. 
 - [x] User needs to be authenticated
 2. **Codebase:** 
@@ -58,7 +58,7 @@ Each Image item has the following fields:
 3. **Best Practices:**
 - [x] All resources needed to be defined in `serverless.yml`. 
 - [x] All permissions are defined per function in `serverless.yml`.
-- [ ] Application has distributed tracing enabled, log statements, or level metrics
+- [x] Application has distributed tracing enabled, log statements, or level metrics
 - [x] Incoming HTTP requests are validated in Lambda handlers or using request validation via API Gateway using `serverless-reqvalidator-plugin`. 
 4. **Architecure:** 
 - [x] Has 1:M relationship between users and items modeled using DynamoDB. 
@@ -73,3 +73,4 @@ KeySchema:
 - [x] Items are fetched using `.query()` instead of `.scan()` method. 
 
 ## Demo: 
+![](demo/demo.gif)
