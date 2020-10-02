@@ -14,6 +14,9 @@
 ## Description:
 A capstone project called **Dogram** to graduate Udacity Cloud Developer Nanodegree. It is a simple Instagram-cloned app using Serverless with Auth0.js for authentication. 
 
+## Demo: 
+![](demo/demo.gif)
+
 ## Technologies: 
 - Serverless Framework
 - React.js
@@ -72,6 +75,3 @@ KeySchema:
       KeyType: RANGE
 ```
 - [x] Items are fetched using `.query()` instead of `.scan()` method. 
-
-## Demo: 
-![](demo/demo.gif)
