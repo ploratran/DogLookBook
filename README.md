@@ -23,6 +23,7 @@ A capstone project called **Dogram** to graduate Udacity Cloud Developer Nanodeg
 ## Getting Started:
 ### Go to [Backend](server) by running: 
 ```cd server```
+
 ### Go to [Frontend](client) by running:
 ```cd client```
 

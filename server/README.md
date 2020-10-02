@@ -2,13 +2,19 @@
 
 > Using **Serverless Framework:**
 
+### Setup Serverless on AWS credentials:
+```sls config credentials --provider aws --key [YOUR_ACCESS_KEY] --secret [YOUR_SECRET_KEY] --profile [YOUR_IAM_USERNAME]```
+
 ### To use Serverless with Nodejs, AWS and Typescript, install: 
 ``` serverless create --template aws-nodejs-typescript --path server```
 
-### Dependencies and Dev Denpendencies: 
+### Install Dependencies and Dev-Denpendencies: 
 ``` npm install aws-xray-sdk cors elasticsearch http-aws-es jsonwebtoken middy uuid winston -S```
 
 ``` npm install @types/jsonwebtoken @types/elasticsearch aws-sdk serverless-aws-documentation serverless-dynamodb-local serverless-iam-roles-per-function serverless-reqvalidator-plugin serverless-plugin-tracing --save-dev```
+
+### How to run server:
+```sls deploy -v```
 
 ### How to run DynamoDB Locally: 
 1. Install Serverless Offline: ```npm install serverless-offline --save-dev```
