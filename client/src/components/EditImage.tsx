@@ -21,7 +21,6 @@ interface EditImageProps {
 
 interface EditImageState {
     description: string, 
-    file: any, 
     uploadState: UploadState
 }
 
@@ -49,7 +48,9 @@ const EditImage: React.FC<EditImageProps> = (props) => {
             })
 
             alert('Data updated!');
-            props.history.push('/'); 
+            
+            // use history goBack() to fix unmounting React error: 
+            props.history.goBack(); 
 
         } catch (e) {
             alert('Could not update data: ' + e.message); 

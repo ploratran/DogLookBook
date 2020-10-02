@@ -73,8 +73,10 @@ const CreateImage: React.FC<CreateImageProps> = ({ history, auth }) => {
             // upload file to S3 bucket using Presigned-URL:
             await uploadFile(uploadUrl, file); 
 
-            alert('File was uploaded!'); 
-            history.push('/');             
+            alert('File successfully uploaded!'); 
+
+            // use history goBack() to fix unmounting React error: 
+            history.goBack();             
         } catch(e) {
             alert('Could not upload an image: ' + e.message); 
         } finally {
