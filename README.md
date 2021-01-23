@@ -6,12 +6,19 @@
 ![](images/demo.gif)
 
 ## Table of Contents
-1. [Tech Stack](#technologies)
+1. [Functionalities](#functionalities)
+1. [Tech Stack](#tech-stack)
 2. [Getting Started](#getting-started)
-3. [API Endpoints](#endpoints)
+3. [API Endpoints](#api-endpoints)
 4. [How to use the application](#how-to-use-the-application)
-5. [Udacity Requirements](#capstone-requirements)
+5. [Functionalities](#functionalities)
+6. [Udacity Requirements](#udacity-capstone-requirements)
 
+## Functionalities:
+- [x] Application can be able to CREATE, UPDATE, DELETE, POST an item.
+- [x] User can click on "Upload New Image" button to select and UPLOAD an item. 
+- [x] Application can be login/logout and show contents of the current user. 
+- [x] User needs to be authenticated
 
 ## Tech Stack: 
 - [Serverless Framework](https://www.serverless.com/)
@@ -34,7 +41,7 @@ npm install
 npm run start
 ```
 
-### Debugging with Postman and AWS X-Ray Tracing: 
+### Debugging with [Postman](postman) and [AWS X-Ray](https://aws.amazon.com/xray/) Tracing: 
 ```
 cd postman
 ```
@@ -70,21 +77,16 @@ To delete a dog, click on the ```Delete``` button of the newly created dog.
 ![](images/5.png)
 
 ## Udacity Capstone Requirements
-1. **Functionalities:** 
-- [x] Application can be able to CREATE, UPDATE, DELETE, POST an item.
-- [x] User can click on "Upload New Image" button to select and UPLOAD an item. 
-- [x] Application can be login/logout and show contents of the current user. 
-- [x] User needs to be authenticated
-2. **Codebase:** 
+1. **Codebase:** 
 - [x] Lambda function codes has to split into multiple files/classes. 
 - [x] Business logic is seperated from code for database access, file storage, etc. 
 - [x] Using `async/await` contructs instead of passing `callbacks`. 
-3. **Best Practices:**
+2. **Best Practices:**
 - [x] All resources needed to be defined in `serverless.yml`. 
 - [x] All permissions are defined per function in `serverless.yml`.
 - [x] Application has distributed tracing enabled, log statements, or level metrics
 - [x] Incoming HTTP requests are validated in Lambda handlers or using request validation via API Gateway using `serverless-reqvalidator-plugin`. 
-4. **Architecure:** 
+3. **Architecure:** 
 - [x] Has 1:M relationship between users and items modeled using DynamoDB. 
 - [x] Has a composite key with both partition and sort keys. 
 ```
