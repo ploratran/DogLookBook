@@ -8,7 +8,7 @@ plugins:
   - serverless-dynamodb-local # emulate DynamoDB locally 
   - serverless-plugin-tracing
   - serverless-dynamodb-local
-  - serverless-offline
+  - serverless-offline # offline should be lat in list
 
 provider:
   name: aws
@@ -39,7 +39,7 @@ custom:
     api: 
       info: 
         version: v1.0.0
-        title: Dogram API 
+        title: DogLookBook API 
         description: Udacity Serverless Capstone Project
     # JSON Schema to validate HTTP request using serverless-reqvalidator-plugin
     models: 
@@ -266,5 +266,5 @@ resources:
               - AttributeName: userId # partition key must be same with base table 
                 KeyType: HASH # partition key
               - AttributeName: createdAt 
-                KeyType: RANGE 
+                KeyType: RANGE # sort key
                     

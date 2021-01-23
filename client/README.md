@@ -2,6 +2,14 @@
 
 > Using **React Framework:**
 
+### How to run client:
+1. Install dependencies:
+2. Start React application: 
+```
+npm i
+npm run start
+```
+
 ### Install React boilerplate with: 
 ``` npx create-react-app cloud-developer-capstone ```
 
@@ -10,9 +18,6 @@
 
 ``` npm install @types/styled-components auth0-js --save-dev```
 
-### How to run client:
-```npm i```
-```npm run start```
 
 ## Image Model
 Each Image item has the following fields: 

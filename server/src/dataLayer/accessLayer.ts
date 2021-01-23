@@ -34,8 +34,8 @@ export class AccessLayer {
         const result = await this.docClient.query({
             TableName: this.imagesTable, // base table
             IndexName: this.indexTable,  // LSIndex table for faster query
-            KeyConditionExpression: 'userId = :userId', 
-            ExpressionAttributeValues: { ':userId': userId }, 
+            KeyConditionExpression: 'userId = :userId', // specify search key that determines item to be read from DynamoDB Table
+            ExpressionAttributeValues: { ':userId': userId }, // value of attribute
             ScanIndexForward: false, // get result with latest item on top
         }).promise(); 
 

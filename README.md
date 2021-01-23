@@ -1,36 +1,45 @@
 # Udacity Cloud Developer Nanodegree Capstone
 
-> Option 2:  A **Serverless** Application
-
-## Table of Contents
-1. [Description](#description)
-2. [Technologies](#technologies)
-3. [Getting Started](#getting-started)
-4. [Endpoints](#endpoints)
-5. [Image Model](#image-model)
-6. [Capstone Requirements](#capstone-requirements)
-7. [Demo](#demo)
-
-## Description:
-A capstone project called **Dogram** to graduate Udacity Cloud Developer Nanodegree. It is a simple Instagram-cloned app using Serverless with Auth0.js for authentication. 
+**DogLookBook** is a Udacity capstone project for the [Cloud Developer Nanodegree](https://www.udacity.com/course/cloud-developer-nanodegree--nd9990). It is a Serverless web application where users can keep information of their dog(s). 
 
 ## Demo: 
-![](demo/demo.gif)
+![](images/demo.gif)
 
-## Technologies: 
-- Serverless Framework
-- React.js
-- AWS DynamoDB, Cloudwatch, Lambda, API Gateway, Cloudformation, S3, X-Ray, SDK
-- Auth0 using RS256 Algorithm
+## Table of Contents
+1. [Tech Stack](#technologies)
+2. [Getting Started](#getting-started)
+3. [API Endpoints](#endpoints)
+4. [How to use the application](#how-to-use-the-application)
+5. [Udacity Requirements](#capstone-requirements)
+
+
+## Tech Stack: 
+- [Serverless Framework](https://www.serverless.com/)
+- [React.js](https://reactjs.org/)
+- [AWS](https://aws.amazon.com/) DynamoDB, Cloudwatch, Lambda, API Gateway, Cloudformation, S3, X-Ray, SDK
+- [auth0.com](Auth0) using RS256 Algorithm
 
 ## Getting Started:
 ### Go to [Backend](server) by running: 
-```cd server```
+```
+cd server
+npm install
+sls deploy -v
+```
 
 ### Go to [Frontend](client) by running:
-```cd client```
+```
+cd client
+npm install
+npm run start
+```
 
-## Endpoints: 
+### Debugging with Postman and AWS X-Ray Tracing: 
+```
+cd postman
+```
+
+## API Endpoints: 
 | **Method** | **endpoint** |
 | ---------- | ------------ |
 | **GET**    | `https://stzf6sj4g6.execute-api.us-east-2.amazonaws.com/dev/images`|
@@ -39,17 +48,28 @@ A capstone project called **Dogram** to graduate Udacity Cloud Developer Nanodeg
 | **DELETE** | `https://stzf6sj4g6.execute-api.us-east-2.amazonaws.com/dev/images/{imageId}`|
 | **POST**   | `https://stzf6sj4g6.execute-api.us-east-2.amazonaws.com/dev/images/s3/{imageId}`|
 
-## Image Model
-Each Image item has the following fields: 
+## How to use the application: 
+1. First, user should login to the application with by click on the ```Log In``` button.
+![](images/1.png)
+2. Second, user should login with Googgle in order to use Auth0 authentication. This application only has option to login with Google account. 
+![](images/2.png)
+### Create a new dog 
+To create a new dog, click on ```Upload New Image```.
+1. Fill in description and image data.
+2. Click ```Upload```
+![](images/3.png)
 
-* `userId` (string) - unique ID of current user
-* `imageId` (string) - unique id for an image
-* `name` (string) - name of an Image item
-* `description` (string) - description of the image
-* `createdAt` (boolean) - date and time when an image was created
-* `imageUrl` (string) - a URL pointing to an image using S3
+### Update a dog
+To update an existing dog, click on the ```Edit``` button of the newly created dog.
+1. Enter new description in Edit page
+2. Click ```Update```
+![](images/4.png)
 
-## Capstone Requirements
+### Delete a dog
+To delete a dog, click on the ```Delete``` button of the newly created dog.
+![](images/5.png)
+
+## Udacity Capstone Requirements
 1. **Functionalities:** 
 - [x] Application can be able to CREATE, UPDATE, DELETE, POST an item.
 - [x] User can click on "Upload New Image" button to select and UPLOAD an item. 
