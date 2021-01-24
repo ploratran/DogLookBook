@@ -27,13 +27,13 @@ const ImagesList: React.FC<ImagesListProps> = ({ history, auth }) => {
         history.push(`/images/${imageId}`);
     }
 
-    // use async/await to display all images using getImages(): 
+    // use async/await to display initial image upon sign-in using getImages(): 
     const fetchInitialImages = async () => {
         const result = await getInitialImages(auth.getIdToken()); 
         setImages(result.items); 
     }
 
-    
+    // use async/await to display image upon click "More" button using getMoreImages(): 
     const fetchMoreImages = async () => {
         const result = await getMoreImages(auth.getIdToken());
         console.log(result);
@@ -48,7 +48,6 @@ const ImagesList: React.FC<ImagesListProps> = ({ history, auth }) => {
             alert(`Failed to fetch images ${e.message}`); 
         }
     }, [auth]); 
-
 
     // set state of images to images not being deleted: 
     const setNewImageList = (imageId: string) => {

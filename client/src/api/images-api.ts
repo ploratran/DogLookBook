@@ -22,7 +22,6 @@ export async function getMoreImages(idToken: string): Promise<any> {
 
     console.log("Fetch more images using nextKey"); 
     const result = await getInitialImages(idToken);
-    console.log(result.nextKey);
 
     const response = await axios.get(`${apiEndpoint}/images?nextKey=${result.nextKey}`, {
         headers: {
@@ -30,7 +29,7 @@ export async function getMoreImages(idToken: string): Promise<any> {
             'Authorization': `Bearer ${idToken}`
         }
     });
-    
+
     return response.data; 
 }
 
