@@ -58,24 +58,26 @@ cd postman
 
 ## How to use the application: 
 1. First, user should login to the application with by click on the ```Log In``` button.
-<img src="images/1.png" width="790" height="400">
+<img src="images/1.png" width="670" height="370">
+
 2. Second, user should login with Googgle in order to use Auth0 authentication. This application only has option to login with Google account. 
 <img src="images/2.png" width="790" height="400">
+
 ### Create a new dog 
 To create a new dog, click on ```Upload New Image```.
 1. Fill in description and image data.
 2. Click ```Upload```
-<img src="images/3.png" width="790" height="400">
+<img src="images/3.png" width="670" height="370">
 
 ### Update a dog
 To update an existing dog, click on the ```Edit``` button of the newly created dog.
 1. Enter new description in Edit page
 2. Click ```Update```
-<img src="images/4.png" width="790" height="400">
+<img src="images/4.png" width="670" height="370">
 
 ### Delete a dog
 To delete a dog, click on the ```Delete``` button of the newly created dog.
-<img src="images/5.png" width="790" height="400">
+<img src="images/5.png" width="670" height="370">
 
 ## Udacity Capstone Requirements
 1. **Codebase:** 
