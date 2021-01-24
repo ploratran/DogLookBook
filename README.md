@@ -57,9 +57,10 @@ cd postman
 
 ## How to use the application: 
 1. First, user should login to the application with by click on the ```Log In``` button.
-![](images/1.png)
+<img src="images/1.png" width="1461" height="605">
 2. Second, user should login with Googgle in order to use Auth0 authentication. This application only has option to login with Google account. 
 ![](images/2.png)
+<img src="images/2.png" width="1461" height="605">
 ### Create a new dog 
 To create a new dog, click on ```Upload New Image```.
 1. Fill in description and image data.
