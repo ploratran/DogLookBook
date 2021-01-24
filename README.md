@@ -77,7 +77,7 @@ To update an existing dog, click on the ```Edit``` button of the newly created d
 
 ### Delete a dog
 To delete a dog, click on the ```Delete``` button of the newly created dog.
-<img src="images/5.png" width="500" height="350>
+<img src="images/5.png" width="500" height="350">
 
 ## Udacity Capstone Requirements
 1. **Codebase:** 
