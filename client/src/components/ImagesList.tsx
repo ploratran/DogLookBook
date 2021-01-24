@@ -4,7 +4,7 @@ import { Card, Divider, Button, Grid, Image, Icon } from 'semantic-ui-react';
 import { History } from 'history'; 
 // import ImageItem from './ImageItem';
 import Auth from '../auth/Auth';
-import { getImages, deleteImage } from '../api/images-api'; 
+import { getImages, deleteImage, getMoreImages } from '../api/images-api'; 
 
 interface ImagesListProps {
     history: History, 
@@ -26,15 +26,37 @@ const ImagesList: React.FC<ImagesListProps> = ({ history, auth }) => {
         history.push(`/images/${imageId}`);
     }
 
+    // use async/await to display all images using getImages(): 
+    const fetchInitialImages = async () => {
+        const result = await getImages(auth.getIdToken()); 
+        console.log(result);
+        const nextKey = result.nextKey; 
+        
+        setImages(result.items); 
+
+        fetchMoreImages(nextKey);
+    }
+
+    
+    const fetchMoreImages = async (nextKey: string) => {
+
+        const result = await getMoreImages(auth.getIdToken(), nextKey);
+
+        console.log(result); 
+        // return result; 
+    }
+
+    // handle user action on clicking "More" button: 
+    const handleClickMore = (e: React.SyntheticEvent) => {
+        e.preventDefault();
+        console.log("click");
+        fetchInitialImages();
+    }
+
     // GET all images in homepage: 
     React.useEffect(() => {
-        // use async/await to display all images using getImages(): 
-        async function getAllImages() {
-            const images = await getImages(auth.getIdToken()); 
-            setImages(images); 
-        }
         try {
-            getAllImages(); 
+            fetchInitialImages(); 
         } catch(e) {
             alert(`Failed to fetch images ${e.message}`); 
         }
@@ -116,7 +138,9 @@ const ImagesList: React.FC<ImagesListProps> = ({ history, auth }) => {
             {/* Fetch more button */}
             <Grid>
                 <Grid.Column textAlign="center">
-                    <Button>More</Button>
+                    <Button
+                        onClick={handleClickMore}
+                    >More</Button>
                 </Grid.Column>
             </Grid>
         </div>
