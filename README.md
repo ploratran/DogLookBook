@@ -61,7 +61,7 @@ cd postman
 <img src="images/1.png" width="670" height="370">
 
 2. Second, user should login with Googgle in order to use Auth0 authentication. This application only has option to login with Google account. 
-<img src="images/2.png" width="790" height="400">
+<img src="images/2.png" width="500" height="350">
 
 ### Create a new dog 
 To create a new dog, click on ```Upload New Image```.
@@ -77,7 +77,7 @@ To update an existing dog, click on the ```Edit``` button of the newly created d
 
 ### Delete a dog
 To delete a dog, click on the ```Delete``` button of the newly created dog.
-<img src="images/5.png" width="670" height="370">
+<img src="images/5.png" width="500" height="350>
 
 ## Udacity Capstone Requirements
 1. **Codebase:** 
