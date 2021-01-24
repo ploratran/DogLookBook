@@ -54,6 +54,13 @@ export const handler: APIGatewayProxyHandler = async (event: APIGatewayProxyEven
     }
 }; 
 
+/**
+ * Get value of the limit parameter.
+ *
+ * @param {Object} event HTTP event passed to a Lambda functionpar
+ *
+ * @returns {number} parsed "limit" parameter
+ */
 function parseLimitParameter(event) {
     const limitStr = getQueryParameter(event, 'limit')
     if (!limitStr) {
@@ -68,6 +75,13 @@ function parseLimitParameter(event) {
     return limit
 }
 
+/**
+ * Get value of the limit parameter.
+ *
+ * @param {Object} event HTTP event passed to a Lambda function
+ *
+ * @returns {Object} parsed "nextKey" parameter
+ */
 function parseNextKeyParameter(event) {
     const nextKeyStr = getQueryParameter(event, 'nextKey')
     if (!nextKeyStr) {
@@ -78,7 +92,15 @@ function parseNextKeyParameter(event) {
     const uriDecoded = decodeURIComponent(nextKeyStr)
     return JSON.parse(uriDecoded)
 }
-  
+
+/**
+ * Get a query parameter or return "undefined"
+ *
+ * @param {Object} event HTTP event passed to a Lambda function
+ * @param {string} name a name of a query parameter to return
+ *
+ * @returns {string} a value of a query parameter value or "undefined" if a parameter is not defined
+ */
 function getQueryParameter (event, name) {
     const queryParams = event.queryStringParameters; 
 
@@ -89,6 +111,13 @@ function getQueryParameter (event, name) {
     return queryParams[name]; 
 }
 
+/**
+ * Encode last evaluated key using
+ *
+ * @param {Object} lastEvaluatedKey a JS object that represents last evaluated key
+ *
+ * @return {string} URI encoded last evaluated key
+ */
 function encodeNextKey(lastEvaluatedKey) {
     if (!lastEvaluatedKey) {
       console.log("lastEvaluatedKye is null. No more item to fetch");
