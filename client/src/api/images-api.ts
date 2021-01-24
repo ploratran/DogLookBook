@@ -8,7 +8,7 @@ import ImageModel from '../type-interfaces/ImageModel';
 // return an array of images
 export async function getInitialImages(idToken: string): Promise<any> {
 
-    const response = await axios.get(`${apiEndpoint}/images`, {
+    const response = await axios.get(`${apiEndpoint}/images?nextKey=`, {
         headers: {
             'Content-Type': 'application/json',
             'Authorization': `Bearer ${idToken}`
@@ -28,9 +28,18 @@ export async function getMoreImages(idToken: string): Promise<any> {
             'Content-Type': 'application/json',
             'Authorization': `Bearer ${idToken}`
         }
-    });
+    }); 
 
-    return response.data; 
+    if (response.data.nextKey) {
+        const moreResponses = await axios.get(`${apiEndpoint}/images?nextKey=${response.data.nextKey}`, {
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${idToken}`
+            }
+        });
+
+        return moreResponses.data;
+    } 
 }
 
 // DELETE an image based on imageId: 

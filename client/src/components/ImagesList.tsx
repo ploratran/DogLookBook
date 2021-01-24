@@ -30,17 +30,18 @@ const ImagesList: React.FC<ImagesListProps> = ({ history, auth }) => {
     // use async/await to display initial image upon sign-in using getImages(): 
     const fetchInitialImages = async () => {
         const result = await getInitialImages(auth.getIdToken()); 
+
         setImages(result.items); 
     }
 
     // use async/await to display image upon click "More" button using getMoreImages(): 
     const fetchMoreImages = async () => {
         const result = await getMoreImages(auth.getIdToken());
-        console.log(result);
+        console.log(result.items);
         setImages(result.items);
     }
 
-    // GET all images in homepage: 
+    // GET initial images in homepage: 
     React.useEffect(() => {
         try {
             fetchInitialImages(); 
@@ -48,6 +49,7 @@ const ImagesList: React.FC<ImagesListProps> = ({ history, auth }) => {
             alert(`Failed to fetch images ${e.message}`); 
         }
     }, [auth]); 
+
 
     // set state of images to images not being deleted: 
     const setNewImageList = (imageId: string) => {
