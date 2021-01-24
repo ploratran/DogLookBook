@@ -4,7 +4,7 @@ import { Card, Divider, Button, Grid, Image, Icon } from 'semantic-ui-react';
 import { History } from 'history'; 
 // import ImageItem from './ImageItem';
 import Auth from '../auth/Auth';
-import { getImages, deleteImage, getMoreImages } from '../api/images-api'; 
+import { getInitialImages, deleteImage, getMoreImages } from '../api/images-api'; 
 
 interface ImagesListProps {
     history: History, 
@@ -15,6 +15,7 @@ const ImagesList: React.FC<ImagesListProps> = ({ history, auth }) => {
 
     // all states: 
     const [images, setImages] = React.useState<ImageModel[]>([]); 
+    // let nextKey: string;
 
     // Go to Upload New Image page on click event:
     const handleCreateImage = () => {
@@ -28,29 +29,15 @@ const ImagesList: React.FC<ImagesListProps> = ({ history, auth }) => {
 
     // use async/await to display all images using getImages(): 
     const fetchInitialImages = async () => {
-        const result = await getImages(auth.getIdToken()); 
-        console.log(result);
-        const nextKey = result.nextKey; 
-        
+        const result = await getInitialImages(auth.getIdToken()); 
         setImages(result.items); 
-
-        fetchMoreImages(nextKey);
     }
 
     
-    const fetchMoreImages = async (nextKey: string) => {
-
-        const result = await getMoreImages(auth.getIdToken(), nextKey);
-
-        console.log(result); 
-        // return result; 
-    }
-
-    // handle user action on clicking "More" button: 
-    const handleClickMore = (e: React.SyntheticEvent) => {
-        e.preventDefault();
-        console.log("click");
-        fetchInitialImages();
+    const fetchMoreImages = async () => {
+        const result = await getMoreImages(auth.getIdToken());
+        console.log(result);
+        setImages(result.items);
     }
 
     // GET all images in homepage: 
@@ -61,6 +48,7 @@ const ImagesList: React.FC<ImagesListProps> = ({ history, auth }) => {
             alert(`Failed to fetch images ${e.message}`); 
         }
     }, [auth]); 
+
 
     // set state of images to images not being deleted: 
     const setNewImageList = (imageId: string) => {
@@ -77,6 +65,13 @@ const ImagesList: React.FC<ImagesListProps> = ({ history, auth }) => {
         } catch (e) {
             alert(`Failed to delete image ${e.message}`); 
         }
+    }
+
+    // handle user action on clicking "More" button: 
+    const handleClickMore = (e: React.SyntheticEvent) => {
+        e.preventDefault();
+        console.log("click");
+        fetchMoreImages();
     }
 
     return (
