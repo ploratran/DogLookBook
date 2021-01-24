@@ -26,21 +26,23 @@ export class AccessLayer {
 
     // GET images based on userId
     // return an array of ImageItem[]
-    async getImages(userId: string): Promise<ImageItem[]> {
+    async getImages(userId: string, limit: any, nextKey: any): Promise<any> {
         logger.info(`Fetching images item from user ${userId}`); 
 
         // use .query() with userId as key:
         // query images based on userId:  
         const result = await this.docClient.query({
             TableName: this.imagesTable, // base table
-            IndexName: this.indexTable,  // LSIndex table for faster query
+            IndexName: this.indexTable,  // GSIndex table for faster query
             KeyConditionExpression: 'userId = :userId', // specify search key that determines item to be read from DynamoDB Table
             ExpressionAttributeValues: { ':userId': userId }, // value of attribute
+            Limit: limit,
+            ExclusiveStartKey: nextKey,
             ScanIndexForward: false, // get result with latest item on top
         }).promise(); 
 
         // return images as an array of objects
-        return result.Items as ImageItem[];
+        return result;
     }
 
     // CREATE image (use PUT)
@@ -75,7 +77,7 @@ export class AccessLayer {
                 userId, 
                 imageId, 
             }, 
-            UpdateExpression: 
+            UpdateExpression: // update description value
                 'set #description = :description', 
             ExpressionAttributeValues: {
                 ':description': image.description,

@@ -13,13 +13,13 @@ const accessLayer = new AccessLayer();
 
 // query all images from the given JWT token
 // return an array of images:
-export async function getAllImages(jwtToken: string): Promise<ImageItem[]> {
+export async function getAllImages(jwtToken: string, limit: any, nextKey: any): Promise<any> {
     logger.info('get images in imageLogic.ts'); 
 
     const userId = parseUserId(jwtToken); 
     logger.info(`userId: ${userId} `); 
     
-    return await accessLayer.getImages(userId); 
+    return await accessLayer.getImages(userId, limit, nextKey); 
 }
 
 // create new image with corresponding userId 
