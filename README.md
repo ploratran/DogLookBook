@@ -24,7 +24,8 @@
 - [Serverless Framework](https://www.serverless.com/)
 - [React.js](https://reactjs.org/)
 - [AWS](https://aws.amazon.com/) DynamoDB, Cloudwatch, Lambda, API Gateway, Cloudformation, S3, X-Ray, SDK
-- [auth0.com](Auth0) using RS256 Algorithm
+- [Auth0](auth0.com) using RS256 Algorithm
+- [Node.js](https://github.com/nodejs/node) Version 12.x.x
 
 ## Getting Started:
 ### Go to [Backend](server) by running: 
@@ -57,25 +58,24 @@ cd postman
 
 ## How to use the application: 
 1. First, user should login to the application with by click on the ```Log In``` button.
-<img src="images/1.png" width="1461" height="605">
+<img src="images/1.png" width="400" height="790">
 2. Second, user should login with Googgle in order to use Auth0 authentication. This application only has option to login with Google account. 
-![](images/2.png)
-<img src="images/2.png" width="1461" height="605">
+<img src="images/2.png" width="400" height="790">
 ### Create a new dog 
 To create a new dog, click on ```Upload New Image```.
 1. Fill in description and image data.
 2. Click ```Upload```
-![](images/3.png)
+<img src="images/3.png" width="400" height="790">
 
 ### Update a dog
 To update an existing dog, click on the ```Edit``` button of the newly created dog.
 1. Enter new description in Edit page
 2. Click ```Update```
-![](images/4.png)
+<img src="images/4.png" width="400" height="790">
 
 ### Delete a dog
 To delete a dog, click on the ```Delete``` button of the newly created dog.
-![](images/5.png)
+<img src="images/5.png" width="400" height="790">
 
 ## Udacity Capstone Requirements
 1. **Codebase:** 
