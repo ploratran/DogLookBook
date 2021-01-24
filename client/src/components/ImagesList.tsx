@@ -71,9 +71,9 @@ const ImagesList: React.FC<ImagesListProps> = ({ history, auth }) => {
 
             <Divider clearing />
 
+            {/* Display images */}
             <Grid centered columns={2}>
                 <Grid.Column>
-                {/* Display Images */}
                 <Card.Group itemsPerRow={1}>
                     {images.map(image => {
                         // return <ImageItem key={image.imageId} image={image} auth={auth}/>
@@ -109,6 +109,14 @@ const ImagesList: React.FC<ImagesListProps> = ({ history, auth }) => {
                             </Card>
                     )})}
                 </Card.Group>
+                </Grid.Column>
+                <Divider clearing />
+            </Grid>
+            
+            {/* Fetch more button */}
+            <Grid>
+                <Grid.Column textAlign="center">
+                    <Button>More</Button>
                 </Grid.Column>
             </Grid>
         </div>
